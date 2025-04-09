@@ -1,0 +1,45 @@
+# Restaurant Review Scraper Configuration
+
+# Restaurant details
+restaurant_name: "Bowens Island Restaurant"
+tripadvisor_url: "https://www.tripadvisor.com/Restaurant_Review-g54171-d436679-Reviews-Bowens_Island_Restaurant-Charleston_South_Carolina.html"
+yelp_url: "https://www.yelp.com/biz/bowens-island-restaurant-charleston-3"
+google_url: "https://www.google.com/maps/place/Bowens+Island+Restaurant/@32.6942361,-79.9653904,17z/data=!4m7!3m6!1s0x88fc6fb9c4167fea:0xf7766add942e243c!8m2!3d32.6942361!4d-79.9628155!9m1!1b1"
+
+# Scraping parameters
+date_range:
+  start: "2024-06-01"
+  end: "2025-04-30"
+max_reviews_per_platform: 100
+timeout_seconds: 60
+retry_attempts: 3
+scroll_pause_time: 1.5
+
+# Anti-bot detection settings
+anti_bot_settings:
+  # Random delay settings
+  enable_random_delays: true
+  delay_base_values:
+    click: 1.0
+    scroll: 1.5
+    navigation: 3.0
+    typing: 0.2
+    waiting: 2.0
+    reading: 5.0
+  
+  # Stealth enhancement settings
+  enable_stealth_plugins: true
+  headless_mode: false
+  simulate_human_behavior: true
+
+# Export settings
+csv_file_path: "reviews.csv"
+
+# Review categorization keywords
+category_keywords:
+  "Food Quality": ["food", "delicious", "taste", "flavor", "cuisine", "dish", "meal", "portion", "menu", "recipe", "chef", "cook", "fresh", "bland", "overcooked", "undercooked", "appetizer", "entree", "dessert"]
+  "Service": ["service", "server", "staff", "waiter", "waitress", "manager", "host", "hostess", "friendly", "rude", "attentive", "slow", "quick", "responsive", "helpful", "unprofessional", "professional"]
+  "Atmosphere": ["atmosphere", "ambiance", "ambience", "decor", "music", "noise", "loud", "quiet", "seating", "comfortable", "cozy", "romantic", "view", "scenery", "crowded", "spacious"]
+  "Cleanliness": ["clean", "dirty", "spotless", "filthy", "hygiene", "sanitize", "pristine", "mess", "bathroom", "restroom", "bug", "fly", "insect", "dust", "sticky", "stain"]
+  "Price": ["price", "value", "expensive", "cheap", "affordable", "overpriced", "reasonable", "worth", "cost", "bill", "menu price", "charge", "dollar", "pricey"]
+  "Wait Time": ["wait", "time", "reservation", "prompt", "delayed", "quick", "fast", "slow", "minutes", "hour", "reservation", "line"]
