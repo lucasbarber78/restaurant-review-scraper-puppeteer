@@ -1,0 +1,23 @@
+[
+  {
+    "name": "Bowens Island Restaurant",
+    "google_url": "https://www.google.com/search?q=Bowens+Island+Restaurant+Reviews",
+    "yelp_url": "https://www.yelp.com/biz/bowens-island-restaurant-charleston-3",
+    "tripadvisor_url": "https://www.tripadvisor.com/Restaurant_Review-g54171-d436679-Reviews-Bowens_Island_Restaurant-Charleston_South_Carolina.html",
+    "active": true
+  },
+  {
+    "name": "Sample Restaurant 2",
+    "google_url": "https://www.google.com/search?q=Sample+Restaurant+2+Reviews",
+    "yelp_url": "https://www.yelp.com/biz/sample-restaurant-2",
+    "tripadvisor_url": "https://www.tripadvisor.com/Restaurant_Review-sample-restaurant-2",
+    "active": false
+  },
+  {
+    "name": "Sample Restaurant 3",
+    "google_url": "https://www.google.com/search?q=Sample+Restaurant+3+Reviews",
+    "yelp_url": "https://www.yelp.com/biz/sample-restaurant-3",
+    "tripadvisor_url": "https://www.tripadvisor.com/Restaurant_Review-sample-restaurant-3",
+    "active": true
+  }
+]
