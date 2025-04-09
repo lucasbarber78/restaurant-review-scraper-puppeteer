@@ -10,7 +10,7 @@ This project aims to solve the following challenges for restaurant owners and ma
 
 2. **Chronological Analysis**: Filter reviews by specific date ranges to analyze trends, track improvement efforts, and measure the impact of operational changes over time.
 
-3. **Automated Categorization**: Automatically classify reviews into meaningful categories (Food Quality, Wait Times, Pricing, Service, Environment/Atmosphere, Product Availability, etc.) to identify specific areas of strength and weakness.
+3. **Automated Categorization**: Automatically classify reviews into meaningful categories (Food Quality, Wait Times, Pricing, Service, Environment/Atmosphere, etc.) to identify specific areas of strength and weakness.
 
 4. **Sentiment Analysis**: Determine whether reviews are positive or negative to quickly gauge overall customer satisfaction and identify problem areas.
 
@@ -37,6 +37,8 @@ This project aims to solve the following challenges for restaurant owners and ma
 - Automated categorization of reviews based on content
 - Anti-bot detection techniques for reliable scraping
 - Configurable scraping parameters
+- **NEW:** Dynamic structure analysis for resilience to website changes
+- **NEW:** Multi-client batch processing
 
 ## Enhanced Anti-Bot Detection System
 
@@ -58,6 +60,24 @@ This scraper uses advanced anti-bot detection evasion techniques:
    - Random expansion of "Read more" links
    - Natural mouse movement patterns
 
+## Dynamic Structure Analysis
+
+The new structure analysis system helps the scraper adapt to changes in website layouts:
+
+- Automatically analyzes the structure of Google review pages
+- Dynamically determines the best selectors for finding review elements
+- Periodically updates the structure analysis to stay current with website changes
+- Falls back to default selectors if structure-based extraction fails
+
+## Multi-Client Support
+
+You can now scrape reviews for multiple restaurant clients in a single run:
+
+- Define clients in the `clients.json` file
+- Process all active clients with a single command
+- Each client gets a separate CSV output file
+- Anti-bot measures are maintained across client processing
+
 ## Requirements
 
 - Python 3.8+
@@ -78,6 +98,8 @@ npm install puppeteer
 
 ## Configuration
 
+### Main Configuration
+
 Edit the `config.yaml` file to set your preferences:
 
 ```yaml
@@ -85,7 +107,7 @@ Edit the `config.yaml` file to set your preferences:
 restaurant_name: "Bowens Island Restaurant"
 tripadvisor_url: "https://www.tripadvisor.com/Restaurant_Review-g54171-d436679-Reviews-Bowens_Island_Restaurant-Charleston_South_Carolina.html"
 yelp_url: "https://www.yelp.com/biz/bowens-island-restaurant-charleston-3"
-google_url: "https://www.google.com/maps/place/Bowens+Island+Restaurant/@32.6942361,-79.9653904,17z/data=!4m7!3m6!1s0x88fc6fb9c4167fea:0xf7766add942e243c!8m2!3d32.6942361!4d-79.9628155!9m1!1b1"
+google_url: "https://www.google.com/search?q=Bowens+Island+Restaurant+Reviews"
 
 # Scraping parameters
 date_range:
@@ -94,21 +116,42 @@ date_range:
 
 # Anti-bot detection settings
 anti_bot_settings:
-  # Random delay settings
   enable_random_delays: true
-  delay_base_values:
-    click: 1.0
-    scroll: 1.5
-    navigation: 3.0
-    typing: 0.2
-  
-  # Stealth enhancement settings
   enable_stealth_plugins: true
   headless_mode: false
   simulate_human_behavior: true
   
+# Google scraper specific configuration
+google_scraper:
+  use_structure_analysis: true
+  structure_file_path: "Review Site Optimization/google_search_review_structure_analysis.json"
+  fallback_to_default_selectors: true
+
 # Export settings
 csv_file_path: "reviews.csv"
+```
+
+### Client Configuration
+
+Edit the `clients.json` file to configure multiple restaurant clients:
+
+```json
+[
+  {
+    "name": "Bowens Island Restaurant",
+    "google_url": "https://www.google.com/search?q=Bowens+Island+Restaurant+Reviews",
+    "yelp_url": "https://www.yelp.com/biz/bowens-island-restaurant-charleston-3",
+    "tripadvisor_url": "https://www.tripadvisor.com/Restaurant_Review-g54171-d436679-Reviews-Bowens_Island_Restaurant-Charleston_South_Carolina.html",
+    "active": true
+  },
+  {
+    "name": "Another Restaurant",
+    "google_url": "https://www.google.com/search?q=Another+Restaurant+Reviews",
+    "yelp_url": "https://www.yelp.com/biz/another-restaurant",
+    "tripadvisor_url": "https://www.tripadvisor.com/Restaurant_Review-example",
+    "active": true
+  }
+]
 ```
 
 ## Usage
@@ -121,19 +164,59 @@ Run the main script:
 python src/main.py
 ```
 
-### Individual Platform Scrapers
+### Enhanced Anti-Bot Mode
 
-Use individual scrapers for specific platforms:
+Run with enhanced anti-bot features:
 
 ```bash
-# TripAdvisor scraper
-python src/tripadvisor_scraper.py
+python src/main.py --enhanced
+```
 
-# Yelp scraper
-python src/yelp_scraper.py
+### Batch Processing
 
-# Google Reviews scraper
-python src/google_scraper.py
+Process all active clients:
+
+```bash
+python src/main.py --enhanced --all-clients
+```
+
+Process a specific client:
+
+```bash
+python src/main.py --enhanced --client "Bowens Island Restaurant"
+```
+
+### Additional Command Line Options
+
+```bash
+# Scrape only specific platforms
+python src/main.py --enhanced --platform yelp google
+
+# Set maximum number of reviews per platform
+python src/main.py --enhanced --max-reviews 50
+
+# Use a custom configuration file
+python src/main.py --enhanced --config my_custom_config.yaml
+
+# Update structure analysis before scraping
+python src/main.py --enhanced --update-structure
+
+# Run in headless mode (less visible but more detectable)
+python src/main.py --enhanced --headless
+
+# Disable stealth plugins (not recommended)
+python src/main.py --enhanced --no-stealth
+
+# Disable random delays (not recommended)
+python src/main.py --enhanced --no-random-delays
+```
+
+## Structure Maintenance
+
+To update the structure analysis manually:
+
+```bash
+python -c "from src.utils.structure_analyzer import update_structure_if_needed; import asyncio; asyncio.run(update_structure_if_needed())"
 ```
 
 ## Contributing
