@@ -21,8 +21,10 @@ from src.tripadvisor_scraper import TripAdvisorReviewScraper
 from src.yelp_scraper import YelpReviewScraper
 from src.google_scraper import GoogleReviewScraper
 
-# Import utilities
+# Import client manager
 from src.utils.client_manager import ClientManager
+
+# Import structure update utility
 from src.utils.structure_analyzer import update_structure_if_needed
 
 # Configure logging
@@ -76,8 +78,12 @@ class RestaurantReviewScraper:
         
         logger.info(f"Initialized Restaurant Review Scraper for {self.restaurant_name}")
     
-    def scrape_all_platforms(self) -> List[Dict[str, Any]]:
-        """Scrape reviews from all platforms.
+    def scrape_all_platforms(self, platforms: List[str] = None) -> List[Dict[str, Any]]:
+        """Scrape reviews from all platforms or specified platforms.
+        
+        Args:
+            platforms (List[str], optional): List of platforms to scrape.
+                Options: ["tripadvisor", "yelp", "google"]. Defaults to all platforms.
         
         Returns:
             List[Dict[str, Any]]: Combined list of reviews from all platforms.
@@ -91,88 +97,46 @@ class RestaurantReviewScraper:
         asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
         loop = asyncio.get_event_loop()
         
+        # Determine which platforms to scrape
+        if platforms is None:
+            platforms = ["tripadvisor", "yelp", "google"]
+        platforms = [p.lower() for p in platforms]
+        
         # Scrape reviews from TripAdvisor
-        logger.info("Starting TripAdvisor scraper")
-        tripadvisor_scraper = TripAdvisorReviewScraper(client_config={"name": self.restaurant_name, "tripadvisor_url": self.config.get("tripadvisor_url", "")})
-        tripadvisor_reviews = loop.run_until_complete(tripadvisor_scraper.scrape_reviews())
-        logger.info(f"Collected {len(tripadvisor_reviews)} reviews from TripAdvisor")
-        self.reviews.extend(tripadvisor_reviews)
-        
-        # Wait a bit between platforms to avoid detection
-        time.sleep(5)
-        
-        # Scrape reviews from Yelp
-        logger.info("Starting Yelp scraper")
-        yelp_scraper = YelpReviewScraper(client_config={"name": self.restaurant_name, "yelp_url": self.config.get("yelp_url", "")})
-        yelp_reviews = loop.run_until_complete(yelp_scraper.scrape_reviews())
-        logger.info(f"Collected {len(yelp_reviews)} reviews from Yelp")
-        self.reviews.extend(yelp_reviews)
-        
-        # Wait a bit between platforms to avoid detection
-        time.sleep(5)
-        
-        # Scrape reviews from Google
-        logger.info("Starting Google Reviews scraper")
-        google_scraper = GoogleReviewScraper(client_config={"name": self.restaurant_name, "google_url": self.config.get("google_url", "")})
-        google_reviews = loop.run_until_complete(google_scraper.scrape_reviews())
-        logger.info(f"Collected {len(google_reviews)} reviews from Google")
-        self.reviews.extend(google_reviews)
-        
-        # Categorize and analyze reviews
-        self._categorize_reviews()
-        self._analyze_sentiment()
-        
-        # Save combined results
-        self._save_to_csv()
-        
-        logger.info(f"Successfully collected a total of {len(self.reviews)} reviews")
-        return self.reviews
-    
-    def scrape_selected_platforms(self, platforms: List[str]) -> List[Dict[str, Any]]:
-        """Scrape reviews from selected platforms.
-        
-        Args:
-            platforms (List[str]): List of platforms to scrape from. 
-                Options: "tripadvisor", "yelp", "google"
-                
-        Returns:
-            List[Dict[str, Any]]: Combined list of reviews from selected platforms.
-        """
-        logger.info(f"Starting to scrape reviews for {self.restaurant_name} from selected platforms: {platforms}")
-        
-        # Create the output directory if it doesn't exist
-        os.makedirs(os.path.dirname(os.path.abspath(self.csv_path)), exist_ok=True)
-        
-        # Create event loop
-        asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
-        loop = asyncio.get_event_loop()
-        
-        # Scrape from selected platforms
         if "tripadvisor" in platforms:
             logger.info("Starting TripAdvisor scraper")
-            tripadvisor_scraper = TripAdvisorReviewScraper(client_config={"name": self.restaurant_name, "tripadvisor_url": self.config.get("tripadvisor_url", "")})
+            tripadvisor_scraper = TripAdvisorReviewScraper(client_config={
+                "name": self.restaurant_name,
+                "tripadvisor_url": self.config.get("tripadvisor_url", "")
+            })
             tripadvisor_reviews = loop.run_until_complete(tripadvisor_scraper.scrape_reviews())
             logger.info(f"Collected {len(tripadvisor_reviews)} reviews from TripAdvisor")
             self.reviews.extend(tripadvisor_reviews)
             
             # Wait a bit between platforms to avoid detection
-            if len(platforms) > 1:
-                time.sleep(5)
+            time.sleep(5)
         
+        # Scrape reviews from Yelp
         if "yelp" in platforms:
             logger.info("Starting Yelp scraper")
-            yelp_scraper = YelpReviewScraper(client_config={"name": self.restaurant_name, "yelp_url": self.config.get("yelp_url", "")})
+            yelp_scraper = YelpReviewScraper(client_config={
+                "name": self.restaurant_name,
+                "yelp_url": self.config.get("yelp_url", "")
+            })
             yelp_reviews = loop.run_until_complete(yelp_scraper.scrape_reviews())
             logger.info(f"Collected {len(yelp_reviews)} reviews from Yelp")
             self.reviews.extend(yelp_reviews)
             
             # Wait a bit between platforms to avoid detection
-            if "google" in platforms:
-                time.sleep(5)
+            time.sleep(5)
         
+        # Scrape reviews from Google
         if "google" in platforms:
             logger.info("Starting Google Reviews scraper")
-            google_scraper = GoogleReviewScraper(client_config={"name": self.restaurant_name, "google_url": self.config.get("google_url", "")})
+            google_scraper = GoogleReviewScraper(client_config={
+                "name": self.restaurant_name,
+                "google_url": self.config.get("google_url", "")
+            })
             google_reviews = loop.run_until_complete(google_scraper.scrape_reviews())
             logger.info(f"Collected {len(google_reviews)} reviews from Google")
             self.reviews.extend(google_reviews)
@@ -348,111 +312,137 @@ class RestaurantReviewScraper:
         print("\nReview collection completed!")
 
 
-def process_single_client(client_config: Dict[str, Any], platforms: List[str], config_path: str = "config.yaml") -> None:
-    """Process a single client.
+def parse_arguments():
+    """Parse command line arguments.
     
-    Args:
-        client_config (Dict[str, Any]): Client configuration
-        platforms (List[str]): List of platforms to scrape from
-        config_path (str, optional): Path to config file. Defaults to "config.yaml".
+    Returns:
+        argparse.Namespace: Parsed arguments.
     """
-    # Create scraper
-    scraper = RestaurantReviewScraper(config_path=config_path, client_config=client_config)
+    parser = argparse.ArgumentParser(description='Restaurant Review Scraper')
     
-    # Scrape all or selected platforms
-    print(f"\nProcessing client: {client_config['name']}")
+    parser.add_argument('--config', type=str, default='config.yaml',
+                      help='Path to configuration file')
+    parser.add_argument('--enhanced', action='store_true',
+                      help='Use enhanced anti-bot detection features')
+    parser.add_argument('--platform', type=str, nargs='+',
+                      choices=['tripadvisor', 'yelp', 'google'],
+                      help='Specify which platforms to scrape')
+    parser.add_argument('--max-reviews', type=int,
+                      help='Maximum number of reviews to scrape per platform')
+    parser.add_argument('--client', type=str,
+                      help='Specify a client name to scrape')
+    parser.add_argument('--all-clients', action='store_true',
+                      help='Scrape all active clients')
+    parser.add_argument('--update-structure', action='store_true',
+                      help='Update the structure analysis before scraping')
+    parser.add_argument('--headless', action='store_true',
+                      help='Run in headless mode')
+    parser.add_argument('--no-stealth', action='store_true',
+                      help='Disable stealth plugins')
+    parser.add_argument('--no-random-delays', action='store_true',
+                      help='Disable random delays')
     
-    if platforms and platforms != ["all"]:
-        reviews = scraper.scrape_selected_platforms(platforms)
-    else:
-        reviews = scraper.scrape_all_platforms()
-    
-    # Print statistics
-    scraper.print_stats()
-    
-    print(f"\nResults for {client_config['name']} saved to: {scraper.csv_path}")
+    return parser.parse_args()
 
 
 def main():
     """Main function to run the restaurant review scraper."""
-    # Parse command line arguments
-    parser = argparse.ArgumentParser(description="Restaurant Review Scraper (Puppeteer Edition)")
-    parser.add_argument("--config", default="config.yaml", help="Path to configuration file")
-    parser.add_argument("--clients", default="clients.json", help="Path to clients file")
-    parser.add_argument("--client", help="Name of specific client to process (if not specified, process all active clients)")
-    parser.add_argument("--platforms", nargs="+", choices=["all", "tripadvisor", "yelp", "google"], default=["all"], 
-                        help="Platforms to scrape from (default: all)")
-    parser.add_argument("--max-reviews", type=int, help="Maximum number of reviews to scrape per platform")
-    parser.add_argument("--update-structure", action="store_true", help="Update Google review structure analysis before scraping")
-    parser.add_argument("--enhanced", action="store_true", help="Use enhanced anti-bot detection features")
-    parser.add_argument("--no-stealth", action="store_true", help="Disable stealth plugins")
-    parser.add_argument("--no-random-delays", action="store_true", help="Disable random delays")
-    parser.add_argument("--debug", action="store_true", help="Enable debug logging")
-    
-    args = parser.parse_args()
-    
-    # Set debug logging if requested
-    if args.debug:
-        logging.getLogger().setLevel(logging.DEBUG)
-    
     print("=" * 80)
     print("Restaurant Review Scraper (Puppeteer Edition)")
     print("=" * 80)
     
-    # Update configuration based on command line args
-    config_path = args.config
-    
-    # Update structure analysis if requested
-    if args.update_structure:
-        print("Updating Google review structure analysis...")
-        asyncio.run(update_structure_if_needed())
-        print("Structure analysis updated!")
+    # Parse command line arguments
+    args = parse_arguments()
     
     try:
         # Load configuration
-        with open(config_path, 'r') as file:
+        with open(args.config, 'r') as file:
             config = yaml.safe_load(file)
         
-        # Update anti-bot settings based on command line args
+        # Update anti-bot settings from command line arguments
         if args.enhanced:
+            print("Using enhanced anti-bot detection features")
+            
             if "anti_bot_settings" not in config:
                 config["anti_bot_settings"] = {}
             
-            config["anti_bot_settings"]["enable_stealth_plugins"] = not args.no_stealth
-            config["anti_bot_settings"]["enable_random_delays"] = not args.no_random_delays
+            # Update based on arguments
+            if args.headless:
+                config["anti_bot_settings"]["headless_mode"] = True
+            if args.no_stealth:
+                config["anti_bot_settings"]["enable_stealth_plugins"] = False
+            if args.no_random_delays:
+                config["anti_bot_settings"]["enable_random_delays"] = False
+            
+            print(f"Anti-bot settings: Stealth {'enabled' if not args.no_stealth else 'disabled'}, "
+                 f"Random delays {'enabled' if not args.no_random_delays else 'disabled'}, "
+                 f"Headless {'enabled' if args.headless else 'disabled'}")
         
         # Update max reviews if specified
         if args.max_reviews:
             config["max_reviews_per_platform"] = args.max_reviews
+            print(f"Maximum reviews per platform set to {args.max_reviews}")
         
-        # Save updated config
-        with open(config_path, 'w') as file:
-            yaml.dump(config, file)
+        # Update structure analysis if requested
+        if args.update_structure:
+            print("Updating structure analysis...")
+            asyncio.run(update_structure_if_needed())
+            print("Structure analysis updated")
         
-        # Process clients
-        client_manager = ClientManager(args.clients)
+        # Initialize client manager
+        client_manager = ClientManager()
         
-        if args.client:
-            # Process specific client
-            client_config = client_manager.get_client_by_name(args.client)
-            if client_config:
-                process_single_client(client_config, args.platforms, config_path)
-            else:
-                print(f"Client '{args.client}' not found")
-        else:
+        # Determine which clients to process
+        clients_to_process = []
+        
+        if args.all_clients:
             # Process all active clients
-            active_clients = client_manager.get_active_clients()
-            
-            if not active_clients:
-                print("No active clients found. Please add clients to clients.json")
+            clients_to_process = client_manager.get_active_clients()
+            print(f"Found {len(clients_to_process)} active clients to process")
+        elif args.client:
+            # Process specific client
+            client = client_manager.get_client_by_name(args.client)
+            if client:
+                clients_to_process = [client]
+                print(f"Processing client: {client['name']}")
+            else:
+                print(f"Client '{args.client}' not found. Available clients:")
+                for client in client_manager.get_active_clients():
+                    print(f"  - {client['name']}")
                 return
-            
-            print(f"Found {len(active_clients)} active clients")
-            
-            for client_config in active_clients:
-                process_single_client(client_config, args.platforms, config_path)
+        else:
+            # Use the client from config.yaml
+            clients_to_process = [{
+                "name": config.get("restaurant_name", ""),
+                "google_url": config.get("google_url", ""),
+                "yelp_url": config.get("yelp_url", ""),
+                "tripadvisor_url": config.get("tripadvisor_url", "")
+            }]
+            print(f"Processing default client: {clients_to_process[0]['name']}")
         
-        print("\nScraping completed successfully!")
+        # Process each client
+        for client in clients_to_process:
+            print(f"\n{'-' * 60}")
+            print(f"Processing client: {client['name']}")
+            print(f"{'-' * 60}")
+            
+            # Create scraper with updated config
+            scraper = RestaurantReviewScraper(config_path=args.config, client_config=client)
+            
+            # Scrape reviews from specified or all platforms
+            reviews = scraper.scrape_all_platforms(platforms=args.platform)
+            
+            # Print statistics
+            scraper.print_stats()
+            
+            print(f"Results saved to: {scraper.csv_path}")
+            
+            # Wait between clients if processing multiple
+            if len(clients_to_process) > 1 and clients_to_process[-1] != client:
+                print("Waiting 30 seconds before processing the next client...")
+                time.sleep(30)
+        
+        print("\nAll clients processed successfully!")
         
     except Exception as e:
         logger.error(f"Error in main: {e}", exc_info=True)
