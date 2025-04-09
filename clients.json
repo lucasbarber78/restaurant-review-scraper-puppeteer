@@ -10,7 +10,14 @@
     "name": "Example Restaurant 2",
     "google_url": "https://www.google.com/search?q=Example+Restaurant+2+Reviews",
     "yelp_url": "https://www.yelp.com/biz/example-restaurant-2",
-    "tripadvisor_url": "https://www.tripadvisor.com/Restaurant_Review-example-2",
+    "tripadvisor_url": "https://www.tripadvisor.com/Restaurant_Review-Example-Restaurant-2.html",
+    "active": false
+  },
+  {
+    "name": "Example Restaurant 3",
+    "google_url": "https://www.google.com/search?q=Example+Restaurant+3+Reviews",
+    "yelp_url": "https://www.yelp.com/biz/example-restaurant-3",
+    "tripadvisor_url": "https://www.tripadvisor.com/Restaurant_Review-Example-Restaurant-3.html",
     "active": false
   }
 ]
