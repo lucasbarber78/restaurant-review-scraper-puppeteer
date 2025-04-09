@@ -7,17 +7,10 @@
     "active": true
   },
   {
-    "name": "The Ordinary",
-    "google_url": "https://www.google.com/search?q=The+Ordinary+Charleston+Reviews",
-    "yelp_url": "https://www.yelp.com/biz/the-ordinary-charleston",
-    "tripadvisor_url": "https://www.tripadvisor.com/Restaurant_Review-g54171-d3348088-Reviews-The_Ordinary-Charleston_South_Carolina.html",
-    "active": true
-  },
-  {
-    "name": "Husk Charleston",
-    "google_url": "https://www.google.com/search?q=Husk+Charleston+Reviews",
-    "yelp_url": "https://www.yelp.com/biz/husk-charleston",
-    "tripadvisor_url": "https://www.tripadvisor.com/Restaurant_Review-g54171-d2042124-Reviews-Husk_Restaurant-Charleston_South_Carolina.html",
-    "active": true
+    "name": "Example Restaurant",
+    "google_url": "https://www.google.com/search?q=Example+Restaurant+Reviews",
+    "yelp_url": "https://www.yelp.com/biz/example-restaurant",
+    "tripadvisor_url": "https://www.tripadvisor.com/Restaurant_Review-Example_Restaurant",
+    "active": false
   }
 ]
