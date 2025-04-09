@@ -26,11 +26,38 @@ anti_bot_settings:
     typing: 0.2
     waiting: 2.0
     reading: 5.0
+  delay_variance: 0.3  # 30% variance for more natural timing
+  
+  # Proxy rotation settings (currently disabled)
+  enable_proxy_rotation: false
+  proxy_rotation_interval_minutes: 30
+  proxy_rotation_frequency: 10
+  random_proxy_rotation: true
   
   # Stealth enhancement settings
   enable_stealth_plugins: true
   headless_mode: false
   simulate_human_behavior: true
+  randomize_fingerprint: true
+  platform_specific_stealth:
+    yelp: true
+    tripadvisor: true
+    google: true
+
+# Google scraper configuration
+google_scraper:
+  use_structure_analysis: true
+  structure_file_path: "Review Site Optimization/google_search_review_structure_analysis.json"
+  fallback_to_default_selectors: true
+  update_structure_interval_days:
+    min: 7   # Minimum days between updates
+    max: 14  # Maximum days between updates
+
+# Structure analyzer settings
+structure_analyzer:
+  output_dir: "Review Site Optimization"
+  screenshots_dir: "Review Site Optimization/screenshots"
+  log_file: "structure_update_log.json"
 
 # Export settings
 csv_file_path: "reviews.csv"
