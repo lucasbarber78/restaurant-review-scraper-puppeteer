@@ -4,7 +4,7 @@
 restaurant_name: "Bowens Island Restaurant"
 tripadvisor_url: "https://www.tripadvisor.com/Restaurant_Review-g54171-d436679-Reviews-Bowens_Island_Restaurant-Charleston_South_Carolina.html"
 yelp_url: "https://www.yelp.com/biz/bowens-island-restaurant-charleston-3"
-google_url: "https://www.google.com/search?q=Bowens+Island+Restaurant+Reviews"
+google_url: "https://www.google.com/maps/place/Bowens+Island+Restaurant/@32.6942361,-79.9653904,17z/data=!4m7!3m6!1s0x88fc6fb9c4167fea:0xf7766add942e243c!8m2!3d32.6942361!4d-79.9628155!9m1!1b1"
 
 # Scraping parameters
 date_range:
@@ -15,7 +15,14 @@ timeout_seconds: 60
 retry_attempts: 3
 scroll_pause_time: 1.5
 
+# Platforms to scrape
+platforms_to_scrape:
+  - "tripadvisor"
+  - "yelp"
+  - "google"
+
 # Anti-bot detection settings
+use_enhanced: false  # Set to true to use enhanced anti-bot detection features
 anti_bot_settings:
   # Random delay settings
   enable_random_delays: true
@@ -31,15 +38,25 @@ anti_bot_settings:
   enable_stealth_plugins: true
   headless_mode: false
   simulate_human_behavior: true
+  
+  # Proxy rotation settings
+  enable_proxy_rotation: false
+  proxy_rotation_interval_minutes: 30
+  proxy_rotation_frequency: 10
+  random_proxy_rotation: true
 
-# Google scraper specific configuration
-google_scraper:
-  use_structure_analysis: true
-  structure_file_path: "Review Site Optimization/google_search_review_structure_analysis.json"
-  fallback_to_default_selectors: true
+# Structure analysis settings
+structure_analysis_path: "data/structure_analysis.json"
+update_structure_on_start: false  # Whether to update structure analysis when starting scraper
+structure_analysis_settings:
+  min_samples: 5  # Minimum number of samples to collect for structure analysis
+  max_samples: 10  # Maximum number of samples to collect for structure analysis
+  save_samples: true  # Whether to save HTML samples during structure analysis
+  samples_directory: "data/samples"  # Directory to save HTML samples
 
 # Export settings
-csv_file_path: "reviews.csv"
+csv_file_path: "data/reviews.csv"
+results_directory: "data/results"
 
 # Review categorization keywords
 category_keywords:
