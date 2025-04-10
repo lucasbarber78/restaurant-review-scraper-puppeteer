@@ -1,16 +1,76 @@
-[
-  {
-    "name": "Bowens Island Restaurant",
-    "google_url": "https://www.google.com/search?q=Bowens+Island+Restaurant+Reviews",
-    "yelp_url": "https://www.yelp.com/biz/bowens-island-restaurant-charleston-3",
+{
+  "bowens_island": {
+    "active": true,
+    "restaurant_name": "Bowens Island Restaurant",
     "tripadvisor_url": "https://www.tripadvisor.com/Restaurant_Review-g54171-d436679-Reviews-Bowens_Island_Restaurant-Charleston_South_Carolina.html",
-    "active": true
+    "yelp_url": "https://www.yelp.com/biz/bowens-island-restaurant-charleston-3",
+    "google_url": "https://www.google.com/maps/place/Bowens+Island+Restaurant/@32.6942361,-79.9653904,17z/data=!4m7!3m6!1s0x88fc6fb9c4167fea:0xf7766add942e243c!8m2!3d32.6942361!4d-79.9628155!9m1!1b1",
+    "date_range": {
+      "start": "2024-06-01",
+      "end": "2025-04-30"
+    },
+    "max_reviews_per_platform": 100,
+    "platforms_to_scrape": ["tripadvisor", "yelp", "google"],
+    "csv_file_path": "data/clients/bowens_island/reviews.csv"
   },
-  {
-    "name": "Example Restaurant 2",
-    "google_url": "https://www.google.com/search?q=Example+Restaurant+2+Reviews",
-    "yelp_url": "https://www.yelp.com/biz/example-restaurant-2",
-    "tripadvisor_url": "https://www.tripadvisor.com/Restaurant_Review-example-2",
-    "active": false
+  "charleston_crab_house": {
+    "active": true,
+    "restaurant_name": "Charleston Crab House",
+    "tripadvisor_url": "https://www.tripadvisor.com/Restaurant_Review-g54171-d436676-Reviews-Charleston_Crab_House-Charleston_South_Carolina.html",
+    "yelp_url": "https://www.yelp.com/biz/charleston-crab-house-charleston",
+    "google_url": "https://www.google.com/maps/place/Charleston+Crab+House/@32.7804277,-79.9265448,17z/data=!3m1!4b1!4m5!3m4!1s0x0:0xf5e5a953b613b0a6!8m2!3d32.7804277!4d-79.9243561",
+    "date_range": {
+      "start": "2024-06-01",
+      "end": "2025-04-30"
+    },
+    "max_reviews_per_platform": 75,
+    "platforms_to_scrape": ["tripadvisor", "yelp", "google"],
+    "csv_file_path": "data/clients/charleston_crab_house/reviews.csv"
+  },
+  "fleet_landing": {
+    "active": true,
+    "restaurant_name": "Fleet Landing Restaurant & Bar",
+    "tripadvisor_url": "https://www.tripadvisor.com/Restaurant_Review-g54171-d436908-Reviews-Fleet_Landing_Restaurant_Bar-Charleston_South_Carolina.html",
+    "yelp_url": "https://www.yelp.com/biz/fleet-landing-restaurant-and-bar-charleston",
+    "google_url": "https://www.google.com/maps/place/Fleet+Landing+Restaurant+%26+Bar/@32.7792661,-79.9287825,17z/data=!3m1!4b1!4m5!3m4!1s0x0:0x859a7e1d5a3e81e8!8m2!3d32.7792661!4d-79.9265938",
+    "date_range": {
+      "start": "2024-06-01",
+      "end": "2025-04-30"
+    },
+    "max_reviews_per_platform": 100,
+    "platforms_to_scrape": ["tripadvisor", "yelp", "google"],
+    "csv_file_path": "data/clients/fleet_landing/reviews.csv",
+    "anti_bot_settings": {
+      "enable_random_delays": true,
+      "headless_mode": false
+    }
+  },
+  "tabullo_italian_eatery": {
+    "active": false,
+    "restaurant_name": "Tabullo Italian Eatery",
+    "tripadvisor_url": "https://www.tripadvisor.com/Restaurant_Review-g54171-d19872962-Reviews-Tabullo_Italian_Eatery-Charleston_South_Carolina.html",
+    "yelp_url": "https://www.yelp.com/biz/tabullo-italian-eatery-charleston",
+    "google_url": "https://www.google.com/maps/place/Tabullo+Italian+Eatery/@32.7868115,-79.9336528,17z/data=!3m1!4b1!4m5!3m4!1s0x0:0xf6f0b00b1b76956d!8m2!3d32.7868115!4d-79.9314641",
+    "date_range": {
+      "start": "2024-06-01",
+      "end": "2025-04-30"
+    },
+    "max_reviews_per_platform": 50,
+    "platforms_to_scrape": ["tripadvisor", "yelp", "google"],
+    "csv_file_path": "data/clients/tabullo_italian_eatery/reviews.csv"
+  },
+  "the_grocery": {
+    "active": true,
+    "restaurant_name": "The Grocery",
+    "tripadvisor_url": "https://www.tripadvisor.com/Restaurant_Review-g54171-d2554251-Reviews-The_Grocery-Charleston_South_Carolina.html",
+    "yelp_url": "https://www.yelp.com/biz/the-grocery-charleston",
+    "google_url": "https://www.google.com/maps/place/The+Grocery/@32.7945401,-79.9464077,17z/data=!3m1!4b1!4m5!3m4!1s0x0:0x8bb67a15d351e328!8m2!3d32.7945401!4d-79.944219",
+    "date_range": {
+      "start": "2024-06-01",
+      "end": "2025-04-30"
+    },
+    "max_reviews_per_platform": 100,
+    "platforms_to_scrape": ["tripadvisor", "yelp", "google"],
+    "csv_file_path": "data/clients/the_grocery/reviews.csv"
   }
-]
+}
