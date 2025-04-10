@@ -3,7 +3,8 @@
 Restaurant Review Scraper - Main Module
 
 This module coordinates the scraping of restaurant reviews from TripAdvisor, Yelp, and Google Reviews.
-It now supports batch processing of multiple restaurant clients.
+It now supports batch processing of multiple restaurant clients and uses structure-based scrapers
+for improved resilience to website changes.
 """
 
 import os
@@ -18,10 +19,10 @@ from typing import List, Dict, Any, Optional
 from datetime import datetime
 from pathlib import Path
 
-# Import scrapers
-from src.tripadvisor_scraper import TripAdvisorReviewScraper
-from src.yelp_scraper import YelpReviewScraper
-from src.google_scraper import GoogleReviewScraper
+# Import structure-based scrapers
+from src.tripadvisor_structure_scraper import TripAdvisorStructureScraper
+from src.yelp_structure_scraper import YelpStructureScraper
+from src.google_structure_scraper import GoogleStructureScraper
 
 # Configure logging
 logging.basicConfig(
@@ -115,7 +116,8 @@ class RestaurantReviewScraper:
         os.makedirs(os.path.dirname(os.path.abspath(self.csv_path)), exist_ok=True)
         
         # Create event loop
-        asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+        if os.name == 'nt':  # Windows
+            asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
         loop = asyncio.get_event_loop()
         
         # Get platforms to scrape
@@ -123,8 +125,8 @@ class RestaurantReviewScraper:
         
         # Scrape reviews from TripAdvisor
         if "tripadvisor" in platforms:
-            logger.info("Starting TripAdvisor scraper")
-            tripadvisor_scraper = TripAdvisorReviewScraper(config_path=None, config_dict=self.config)
+            logger.info("Starting TripAdvisor structure scraper")
+            tripadvisor_scraper = TripAdvisorStructureScraper(config_path=None, config_dict=self.config)
             tripadvisor_reviews = loop.run_until_complete(tripadvisor_scraper.scrape_reviews())
             logger.info(f"Collected {len(tripadvisor_reviews)} reviews from TripAdvisor")
             self.reviews.extend(tripadvisor_reviews)
@@ -134,8 +136,8 @@ class RestaurantReviewScraper:
         
         # Scrape reviews from Yelp
         if "yelp" in platforms:
-            logger.info("Starting Yelp scraper")
-            yelp_scraper = YelpReviewScraper(config_path=None, config_dict=self.config)
+            logger.info("Starting Yelp structure scraper")
+            yelp_scraper = YelpStructureScraper(config_path=None, config_dict=self.config)
             yelp_reviews = loop.run_until_complete(yelp_scraper.scrape_reviews())
             logger.info(f"Collected {len(yelp_reviews)} reviews from Yelp")
             self.reviews.extend(yelp_reviews)
@@ -145,8 +147,8 @@ class RestaurantReviewScraper:
         
         # Scrape reviews from Google
         if "google" in platforms:
-            logger.info("Starting Google Reviews scraper")
-            google_scraper = GoogleReviewScraper(config_path=None, config_dict=self.config)
+            logger.info("Starting Google structure scraper")
+            google_scraper = GoogleStructureScraper(config_path=None, config_dict=self.config)
             google_reviews = loop.run_until_complete(google_scraper.scrape_reviews())
             logger.info(f"Collected {len(google_reviews)} reviews from Google")
             self.reviews.extend(google_reviews)
@@ -352,6 +354,78 @@ def update_structure_analysis(config):
         return False
 
 
+def validate_structure_files(args):
+    """Validate structure files against live websites.
+    
+    Args:
+        args (argparse.Namespace): Command line arguments.
+        
+    Returns:
+        bool: True if all validations passed, False otherwise.
+    """
+    try:
+        from src.utils.structure_analyzer import StructureManager
+        
+        manager = StructureManager()
+        results = {}
+        
+        # Determine which platforms to validate
+        platforms = []
+        if args.platform == "all":
+            platforms = ["tripadvisor", "yelp", "google"]
+        else:
+            platforms = [args.platform]
+        
+        print(f"\nValidating structure files for: {', '.join(platforms)}")
+        print("=" * 60)
+        
+        all_valid = True
+        for platform in platforms:
+            # Check if structure file exists
+            if manager.structure_exists(platform):
+                # Load structure
+                is_loaded = manager.load_structure(platform)
+                if is_loaded:
+                    # Check if structure needs update
+                    needs_update = manager.structure_needs_update(platform)
+                    if needs_update:
+                        print(f"{platform}: Structure file found but is outdated")
+                        all_valid = False
+                        results[platform] = "Outdated"
+                    else:
+                        # Validate structure against required selectors
+                        structure = manager.structures[platform]
+                        required_selectors = structure.get("validation", {}).get("required_selectors", [])
+                        selectors = structure.get("selectors", {})
+                        
+                        missing_selectors = [sel for sel in required_selectors if sel not in selectors]
+                        
+                        if missing_selectors:
+                            print(f"{platform}: Missing required selectors: {', '.join(missing_selectors)}")
+                            all_valid = False
+                            results[platform] = "Missing selectors"
+                        else:
+                            print(f"{platform}: Structure file valid")
+                            results[platform] = "Valid"
+                else:
+                    print(f"{platform}: Structure file found but could not be loaded")
+                    all_valid = False
+                    results[platform] = "Load failed"
+            else:
+                print(f"{platform}: Structure file not found")
+                all_valid = False
+                results[platform] = "Not found"
+        
+        print("=" * 60)
+        print(f"Validation {'succeeded' if all_valid else 'failed'}")
+        
+        return all_valid
+    
+    except Exception as e:
+        logger.error(f"Error validating structure files: {e}", exc_info=True)
+        return False
+
+
 def load_client_config(client_name, clients_path="clients.json"):
     """Load client-specific configuration.
     
@@ -527,6 +601,7 @@ def main():
     
     # Structure analysis
     parser.add_argument("--update-structure", action="store_true", help="Update Google structure analysis before scraping")
+    parser.add_argument("--validate-structure", action="store_true", help="Validate structure files against live websites")
     
     # Enhanced anti-bot detection options
     parser.add_argument("--enhanced", action="store_true", help="Use enhanced anti-bot detection features")
@@ -551,6 +626,11 @@ def main():
     print("=" * 80)
     
     try:
+        # Validate structure files if requested
+        if args.validate_structure:
+            validate_structure_files(args)
+            return
+            
         # Process all active clients
         if args.all_clients:
             print(f"\nProcessing all active clients")
