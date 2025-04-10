@@ -1,0 +1,235 @@
+{
+  "updated_at": "2025-04-10T14:30:00.000Z",
+  "version": "1.0.0",
+  "selectors": {
+    "reviewContainer": [
+      "div[data-reviewid]",
+      ".review-container"
+    ],
+    "reviewerName": [
+      ".info_text div",
+      ".memberOverlayLink",
+      ".member_info .username"
+    ],
+    "rating": [
+      "span.ui_bubble_rating"
+    ],
+    "ratingExtractor": {
+      "type": "classPattern",
+      "pattern": "bubble_([0-9]+)",
+      "divisor": 10
+    },
+    "date": [
+      ".ratingDate",
+      ".date"
+    ],
+    "dateCleanupPatterns": [
+      {
+        "pattern": "^Reviewed\\s+",
+        "replacement": ""
+      },
+      {
+        "pattern": "^Date of visit:?\\s+",
+        "replacement": ""
+      }
+    ],
+    "reviewText": [
+      ".prw_reviews_text_summary_hsx p",
+      ".partial_entry",
+      ".review-container .entry"
+    ],
+    "expandButton": [
+      "span.taLnk.ulBlueLinks",
+      "div.taLnk.ulBlueLinks"
+    ],
+    "nextPageButton": [
+      "a.nav.next", 
+      "a.ui_button.nav.next",
+      "[data-page-number=\"next\"]"
+    ],
+    "totalReviewsCount": [
+      ".reviews_header_count",
+      ".header_rating span.reviews_header_count",
+      "a.restaurants-detail-overview-cards-RatingsOverviewCard__ratingCount--DFxkG"
+    ]
+  },
+  "anti_bot_patterns": {
+    "cookie_consent": {
+      "selectors": [
+        "button#onetrust-accept-btn-handler",
+        "button[id*=\"accept\"]",
+        "button[id*=\"cookie\"]",
+        "button[class*=\"cookie\"]",
+        "button[class*=\"accept\"]",
+        ".evidon-banner-acceptbutton",
+        "#gdpr-consent-tool-wrapper button[type=\"submit\"]"
+      ],
+      "action": "click",
+      "wait_after": 1500
+    },
+    "popups": {
+      "selectors": [
+        ".ui_close_x",
+        "[data-test-target=\"close-dialog\"]",
+        "button[title=\"Close\"]"
+      ],
+      "action": "click",
+      "wait_after": 1000
+    },
+    "login_prompt": {
+      "selectors": [
+        ".auth_close_button",
+        ".ui-dialog-titlebar-close",
+        "button.overlayCloseX"
+      ],
+      "action": "click",
+      "wait_after": 1000
+    },
+    "captcha_indicators": {
+      "selectors": [
+        "iframe[src*=\"recaptcha\"]",
+        "iframe[src*=\"captcha\"]",
+        "form[action*=\"captcha\"]",
+        "div.g-recaptcha",
+        "div[class*=\"captcha\"]",
+        "div[data-sitekey]"
+      ],
+      "text_patterns": [
+        "security check",
+        "verify you are human",
+        "captcha"
+      ],
+      "action": "report"
+    }
+  },
+  "behavior_patterns": {
+    "initial_wait": {
+      "base_time": 2000,
+      "variance": 500
+    },
+    "scroll_pattern": {
+      "initial_scroll": {
+        "pixels": 300,
+        "variance": 100
+      },
+      "review_scroll": {
+        "pixels": 200,
+        "variance": 80,
+        "probability": 0.8
+      },
+      "occasional_up_scroll": {
+        "pixels": 50,
+        "variance": 30,
+        "probability": 0.2
+      }
+    },
+    "hover_behaviors": {
+      "photo_hover": {
+        "selectors": [".ui_avatar", ".avatar", ".ppr_priv_resp_photo_carousel img"],
+        "probability": 0.3,
+        "duration": {
+          "base_time": 1200,
+          "variance": 400
+        }
+      },
+      "rating_hover": {
+        "selectors": ["span.ui_bubble_rating"],
+        "probability": 0.2,
+        "duration": {
+          "base_time": 800,
+          "variance": 300
+        }
+      }
+    },
+    "page_interaction": {
+      "read_time": {
+        "base_time": 5000,
+        "variance": 2000
+      },
+      "mouse_movement": {
+        "enabled": true,
+        "movements_per_page": {
+          "min": 3,
+          "max": 7
+        }
+      }
+    },
+    "expand_reviews": {
+      "batch_size": 3,
+      "delay_between": {
+        "base_time": 1500,
+        "variance": 500
+      }
+    }
+  },
+  "fingerprinting": {
+    "webgl_vendors": [
+      "Google Inc. (NVIDIA)",
+      "Google Inc. (Intel)",
+      "Google Inc. (AMD)",
+      "Google Inc.",
+      "Intel Inc.",
+      "NVIDIA Corporation",
+      "Apple Inc."
+    ],
+    "webgl_renderers": [
+      "ANGLE (NVIDIA GeForce RTX 3070 Direct3D11 vs_5_0 ps_5_0)",
+      "ANGLE (Intel(R) UHD Graphics 630 Direct3D11 vs_5_0 ps_5_0)",
+      "ANGLE (AMD Radeon RX 6800 XT Direct3D11 vs_5_0 ps_5_0)",
+      "ANGLE (Intel, Intel(R) Iris(TM) Plus Graphics 640 Direct3D11 vs_5_0 ps_5_0)",
+      "ANGLE (Apple M1)",
+      "ANGLE (Apple M2)",
+      "ANGLE (Intel, Intel(R) HD Graphics 400 Direct3D11 vs_5_0 ps_5_0)",
+      "ANGLE (NVIDIA GeForce RTX 2060 Direct3D11 vs_5_0 ps_5_0)",
+      "Metal (Apple M1)"
+    ],
+    "navigator_overrides": {
+      "languages": ["en-US", "en"],
+      "plugins_length": 3,
+      "vendor": "Google Inc."
+    },
+    "special_properties": {
+      "webdriver": false,
+      "chrome_automation": false,
+      "broken_image_detection": true
+    }
+  },
+  "platform_specific": {
+    "tripadvisor": {
+      "delay_multiplier": 1.2,
+      "wait_for_animations": true,
+      "menu_interactions": {
+        "enabled": true,
+        "selectors": [
+          ".taLnk",
+          ".ulBlueLinks"
+        ],
+        "probability": 0.15
+      },
+      "extra_user_agent_signatures": [
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.1 Safari/605.1.15",
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:122.0) Gecko/20100101 Firefox/122.0"
+      ],
+      "avoidance_techniques": [
+        "reset_cookies_on_captcha",
+        "slow_mouse_movements",
+        "random_viewport_size"
+      ]
+    }
+  },
+  "validation": {
+    "required_selectors": [
+      "reviewContainer",
+      "reviewerName",
+      "rating",
+      "reviewText"
+    ],
+    "success_threshold": 0.7,
+    "sample_urls": [
+      "https://www.tripadvisor.com/Restaurant_Review-g54171-d436679-Reviews-Bowens_Island_Restaurant-Charleston_South_Carolina.html",
+      "https://www.tripadvisor.com/Restaurant_Review-g60763-d802686-Reviews-Le_Bernardin-New_York_City_New_York.html",
+      "https://www.tripadvisor.com/Restaurant_Review-g55197-d871728-Reviews-Charlie_Vergos_Rendezvous-Memphis_Tennessee.html"
+    ]
+  }
+}
