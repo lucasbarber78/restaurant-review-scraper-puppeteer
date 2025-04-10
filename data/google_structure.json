@@ -1,0 +1,323 @@
+{
+  "updated_at": "2025-04-10T17:00:00.000Z",
+  "version": "1.0.0",
+  "selectors": {
+    "reviewContainer": [
+      "div[data-review-id]",
+      "div[role=\"listitem\"]",
+      ".gws-localreviews__google-review"
+    ],
+    "reviewerName": [
+      ".d4r55",
+      ".y3Ibjb span",
+      ".DHIhE",
+      ".PiDzfc"
+    ],
+    "rating": [
+      "span[role=\"img\"]",
+      "div[aria-label*=\"star\"]",
+      "g-review-stars",
+      ".pw5pyd"
+    ],
+    "ratingExtractor": {
+      "type": "ariaLabel",
+      "pattern": "(\\d+)",
+      "attribute": "aria-label"
+    },
+    "date": [
+      ".rsqaWe",
+      ".y3Ibjb",
+      ".DU9Pgb",
+      ".dehysf"
+    ],
+    "dateCleanupPatterns": [
+      {
+        "pattern": "^Reviewed\\s+",
+        "replacement": ""
+      },
+      {
+        "pattern": "a\\s+\\w+\\s+ago",
+        "replacement": ""
+      }
+    ],
+    "reviewText": [
+      ".wiI7pd",
+      ".MyEned",
+      ".w8nwRe",
+      ".review-full-text"
+    ],
+    "expandButton": [
+      ".w8nwRe button",
+      "button[jsaction*=\"pane.review.expandReview\"]",
+      ".review-more-link",
+      "span[jsaction*=\"pane.review.expandReview\"]"
+    ],
+    "reviewsTab": [
+      "button[jsaction*=\"pane.rating.moreReviews\"]",
+      "a[href*=\"#lrd=\"]",
+      "div[data-tab=\"reviews\"]",
+      "button[aria-label*=\"reviews\"]"
+    ],
+    "reviewScrollContainer": [
+      "div[role=\"feed\"]",
+      ".review-dialog-list",
+      ".section-scrollbox"
+    ],
+    "filterButtons": [
+      "button[jsaction*=\"pane.rating.sort\"]",
+      "button[jsaction*=\"pane.review.filter\"]",
+      ".dropdown-menu button"
+    ]
+  },
+  "anti_bot_patterns": {
+    "cookie_consent": {
+      "selectors": [
+        "button#L2AGLb",
+        "div.VDity button",
+        "button[aria-label=\"Accept all\"]",
+        "button.tHlp8d"
+      ],
+      "action": "click",
+      "wait_after": 1500
+    },
+    "popups": {
+      "selectors": [
+        "button[aria-label=\"Close\"]",
+        ".close-button",
+        ".dismissButton",
+        ".overlay-close-button"
+      ],
+      "action": "click",
+      "wait_after": 1000
+    },
+    "login_prompt": {
+      "selectors": [
+        ".sign-in-close-button",
+        "button[jsaction*=\"dismiss\"]",
+        ".signin-dialog .close-button"
+      ],
+      "action": "click",
+      "wait_after": 1000
+    },
+    "captcha_indicators": {
+      "selectors": [
+        "iframe[src*=\"recaptcha\"]",
+        "div.g-recaptcha",
+        "form#captcha-form",
+        "div#captcha",
+        "input[name=\"g-recaptcha-response\"]"
+      ],
+      "text_patterns": [
+        "verify you're a human",
+        "confirm you're not a robot",
+        "security check",
+        "unusual traffic"
+      ],
+      "action": "report"
+    },
+    "rate_limiting": {
+      "selectors": [
+        ".error-code-widget",
+        "div[jscontroller=\"R9Ulx\"]",
+        "div[jsaction*=\"errorPage\"]"
+      ],
+      "text_patterns": [
+        "too many requests",
+        "unusual traffic from your computer network",
+        "your computer or network may be sending automated queries",
+        "try again later"
+      ],
+      "action": "pause_and_retry"
+    }
+  },
+  "behavior_patterns": {
+    "initial_wait": {
+      "base_time": 2500,
+      "variance": 700
+    },
+    "scroll_pattern": {
+      "initial_scroll": {
+        "pixels": 250,
+        "variance": 50
+      },
+      "review_scroll": {
+        "pixels": 200,
+        "variance": 50,
+        "probability": 0.9
+      },
+      "occasional_up_scroll": {
+        "pixels": 60,
+        "variance": 30,
+        "probability": 0.15
+      },
+      "pause_after_scroll": {
+        "base_time": 1000,
+        "variance": 400
+      },
+      "max_scrolls": 15
+    },
+    "hover_behaviors": {
+      "photo_hover": {
+        "selectors": ["img.KgaZPe", ".dvBvQd img", ".dPXxFd"],
+        "probability": 0.3,
+        "duration": {
+          "base_time": 1200,
+          "variance": 400
+        }
+      },
+      "reviewer_hover": {
+        "selectors": [".d4r55", ".DHIhE", ".PiDzfc"],
+        "probability": 0.25,
+        "duration": {
+          "base_time": 900,
+          "variance": 300
+        }
+      }
+    },
+    "page_interaction": {
+      "read_time": {
+        "base_time": 7000,
+        "variance": 2500
+      },
+      "mouse_movement": {
+        "enabled": true,
+        "movements_per_page": {
+          "min": 4,
+          "max": 9
+        },
+        "acceleration": "natural",
+        "curved_path": true
+      },
+      "random_clicks": {
+        "enabled": true,
+        "probability": 0.1,
+        "neutral_areas": [
+          ".section-layout",
+          ".maps-omnibox-container",
+          ".section-header-title"
+        ]
+      }
+    },
+    "expand_reviews": {
+      "batch_size": 3,
+      "delay_between": {
+        "base_time": 1300,
+        "variance": 400
+      }
+    },
+    "infinite_scroll_handling": {
+      "enabled": true,
+      "scroll_increment": 300,
+      "wait_after_scroll": {
+        "base_time": 1500,
+        "variance": 500
+      },
+      "detect_changes": {
+        "selector": "div[role=\"listitem\"]",
+        "previous_count": 0,
+        "max_unchanged_scrolls": 5
+      }
+    }
+  },
+  "fingerprinting": {
+    "webgl_vendors": [
+      "Google Inc. (NVIDIA)",
+      "Google Inc. (Intel)",
+      "Google Inc. (AMD)",
+      "Google Inc.",
+      "Intel Inc.",
+      "NVIDIA Corporation",
+      "Apple Inc."
+    ],
+    "webgl_renderers": [
+      "ANGLE (NVIDIA GeForce RTX 3070 Direct3D11 vs_5_0 ps_5_0)",
+      "ANGLE (Intel(R) UHD Graphics 630 Direct3D11 vs_5_0 ps_5_0)",
+      "ANGLE (AMD Radeon RX 6800 XT Direct3D11 vs_5_0 ps_5_0)",
+      "ANGLE (Intel, Intel(R) Iris(TM) Plus Graphics 640 Direct3D11 vs_5_0 ps_5_0)",
+      "ANGLE (Apple M1)",
+      "ANGLE (Apple M2)",
+      "ANGLE (Intel, Intel(R) HD Graphics 400 Direct3D11 vs_5_0 ps_5_0)",
+      "ANGLE (NVIDIA GeForce RTX 2060 Direct3D11 vs_5_0 ps_5_0)",
+      "Metal (Apple M1)"
+    ],
+    "navigator_overrides": {
+      "languages": ["en-US", "en"],
+      "plugins_length": 3,
+      "vendor": "Google Inc.",
+      "hardwareConcurrency": {
+        "min": 4,
+        "max": 16
+      },
+      "deviceMemory": {
+        "options": [4, 8, 16]
+      },
+      "touchpoints": {
+        "enabled": true,
+        "max_touch_points": 5
+      }
+    },
+    "special_properties": {
+      "webdriver": false,
+      "chrome_automation": false,
+      "broken_image_detection": true,
+      "permission_overrides": {
+        "notifications": "default",
+        "geolocation": "prompt"
+      }
+    },
+    "screen_properties": {
+      "randomize": true,
+      "width_range": [1280, 1920],
+      "height_range": [800, 1080],
+      "color_depth": 24,
+      "pixel_ratio": [1, 2]
+    },
+    "connection_properties": {
+      "enabled": true,
+      "effective_type": "4g",
+      "downlink_range": [10, 25],
+      "rtt_range": [30, 80]
+    }
+  },
+  "platform_specific": {
+    "google": {
+      "delay_multiplier": 1.2,
+      "wait_for_animations": true,
+      "maps_api_detection_evasion": true,
+      "session_attributes": {
+        "randomize_scroll_speed": true,
+        "simulate_map_interaction": true,
+        "zoom_levels": [15, 16, 17, 18],
+        "pan_probabilities": 0.2
+      },
+      "extra_user_agent_signatures": [
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.1 Safari/605.1.15",
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:122.0) Gecko/20100101 Firefox/122.0",
+        "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36",
+        "Mozilla/5.0 (iPad; CPU OS 17_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/120.0.6099.119 Mobile/15E148 Safari/604.1"
+      ],
+      "avoidance_techniques": [
+        "ip_rotation_on_block",
+        "reset_cookies_on_captcha",
+        "slow_mouse_movements",
+        "random_viewport_size",
+        "event_listener_evasion"
+      ]
+    }
+  },
+  "validation": {
+    "required_selectors": [
+      "reviewContainer",
+      "reviewerName",
+      "rating",
+      "reviewText"
+    ],
+    "success_threshold": 0.7,
+    "sample_urls": [
+      "https://www.google.com/maps/place/Bowens+Island+Restaurant/@32.6942361,-79.9653904,17z/data=!4m7!3m6!1s0x88fc6fb9c4167fea:0xf7766add942e243c!8m2!3d32.6942361!4d-79.9628155!9m1!1b1",
+      "https://www.google.com/maps/place/Le+Bernardin/@40.7614589,-73.9834889,17z/data=!4m7!3m6!1s0x89c258573de31dff:0xd0cb0fc8863c3d1a!8m2!3d40.7614592!4d-73.9813002!9m1!1b1",
+      "https://www.google.com/maps/place/Franklin+Barbecue/@30.2701238,-97.7330519,17z/data=!4m7!3m6!1s0x8644b5a4ae3bcc33:0x686e2030ff41ce28!8m2!3d30.2701238!4d-97.7308632!9m1!1b1"
+    ]
+  }
+}
