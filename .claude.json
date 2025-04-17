@@ -1,0 +1,141 @@
+{
+  "projectInstructions": {
+    "conversationStart": {
+      "requiredFiles": [
+        "NEXT_STEPS.md",
+        "FUTURE_ENHANCEMENTS.md"
+      ],
+      "actions": [
+        "Understand repository structure and dependencies",
+        "Summarize current project status",
+        "Confirm next steps with human",
+        "Never proceed with code writing or changes without getting an explicit 'Yes' approval"
+      ]
+    },
+    "conversationEnd": {
+      "requiredQuestions": [
+        "Would you like a summary of what we have achieved in this chat?",
+        "What items are still pending?",
+        "What new items do we need to add?",
+        "Do you want to update the NEXT_STEPS.md or FUTURE_ENHANCEMENTS.md files?"
+      ]
+    },
+    "approvalRules": {
+      "requireExplicitApproval": [
+        "Any code changes",
+        "Updates to NEXT_STEPS.md",
+        "Updates to FUTURE_ENHANCEMENTS.md",
+        "Any documentation updates",
+        "Any solution implementation"
+      ],
+      "approvalFormat": "Must explicitly ask for a 'Yes' before proceeding with any changes"
+    },
+    "documentationGuidelines": {
+      "nextStepsMd": {
+        "preserveSections": ["What We've Accomplished"],
+        "updateFormat": {
+          "recentlyCompleted": "- YYYY-MM-DD: Item description",
+          "currentEnhancement": "List of remaining tasks"
+        }
+      },
+      "completedEnhancement": {
+        "askAbout": [
+          "Selecting a new enhancement from FUTURE_ENHANCEMENTS.md",
+          "Updating NEXT_STEPS.md with detailed implementation steps for the newly selected enhancement"
+        ]
+      }
+    },
+    "projectEditing": {
+      "toolUsage": {
+        "allowedTools": [
+          "GitHub Model Context Protocol tools only"
+        ],
+        "prohibitedTools": [
+          "fileserver model context protocol"
+        ],
+        "editingWorkflow": "All edits must be made directly in GitHub repository, never to local files",
+        "rationale": "This allows the user to sync changes from GitHub to local machine when ready"
+      }
+    },
+    "projectSpecific": {
+      "securityConsiderations": [
+        "Follow ethical scraping practices",
+        "Respect robots.txt and site terms of service",
+        "Store secrets securely (use environment variables or secure vaults)",
+        "Implement proper rate limiting to avoid overloading sites",
+        "Log security-relevant events"
+      ],
+      "scrapingBestPractices": [
+        "Use appropriate selectors (prefer data attributes over CSS classes)",
+        "Implement random delays between requests",
+        "Use stealth plugins to avoid detection",
+        "Consider rotating user agents and proxies",
+        "Use proper page lifecycle management",
+        "Minimize resource usage",
+        "Handle browser crashes and restarts",
+        "Test on small samples before running large scrapes"
+      ],
+      "apiDevelopment": [
+        "Use FastAPI for all REST API endpoints",
+        "Document all endpoints with OpenAPI/Swagger",
+        "Implement proper validation using Pydantic models",
+        "Use appropriate HTTP status codes",
+        "Implement proper authentication and authorization"
+      ],
+      "errorHandling": [
+        "Use try/except blocks around network operations",
+        "Implement retry mechanisms",
+        "Handle site structure changes gracefully",
+        "Log errors appropriately"
+      ]
+    },
+    "developmentWorkflow": {
+      "phases": [
+        {
+          "name": "Analysis phase",
+          "tasks": [
+            "Understand the structure of review platforms",
+            "Design scraping strategies",
+            "Document selectors and extraction patterns",
+            "Test for anti-bot detection mechanisms"
+          ]
+        },
+        {
+          "name": "Implementation phase",
+          "tasks": [
+            "Create or update scraper modules",
+            "Implement anti-bot evasion techniques",
+            "Develop data extraction and normalization logic",
+            "Create multi-client support systems"
+          ]
+        },
+        {
+          "name": "Testing phase",
+          "tasks": [
+            "Unit tests for individual components",
+            "Integration tests for end-to-end scraping",
+            "Performance testing",
+            "Detection evasion testing"
+          ]
+        },
+        {
+          "name": "Documentation phase",
+          "tasks": [
+            "Update technical documentation",
+            "Document command-line options",
+            "Create user guides",
+            "Document anti-bot evasion techniques"
+          ]
+        },
+        {
+          "name": "Deployment phase",
+          "tasks": [
+            "Setup instructions",
+            "Configuration management",
+            "Monitoring and maintenance"
+          ]
+        }
+      ]
+    }
+  }
+}
