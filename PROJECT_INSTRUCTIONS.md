@@ -44,73 +44,73 @@ Always maintain this separation between immediate tasks (NEXT_STEPS.md) and futu
 
 ## Specific to This Project
 
-When working with this web scraping project for restaurant reviews:
+When working with this Restaurant Review Scraper Puppeteer project:
 
-1. Always be mindful of the sensitivity of website scrapers and anti-bot detection measures
-2. Test changes thoroughly in non-headless mode before pushing to production
-3. Consider the impact on website performance and avoid overloading sites with requests
+1. Always be mindful of anti-bot detection mechanisms and legal compliance
+2. Test changes thoroughly before pushing to production
+3. Consider the impact on scraping performance and reliability
    - Implement appropriate delays between requests
-   - Use proper throttling techniques
-   - Consider the use of rotating proxies for high-volume scraping
+   - Use stealth plugins to avoid detection
+   - Consider rotating user agents and proxies
 4. Maintain backward compatibility with existing data structures
-5. Document all scraper interactions and data schema changes clearly
-6. When enhancing the anti-bot detection systems, provide examples of expected behavior
+5. Document all scraper interactions and data extraction patterns clearly
+6. When enhancing the anti-bot detection, provide examples of evasion techniques used
 7. For GUI improvements, include simple mockups or descriptions of the proposed changes
-8. Always follow best practices for scraper design and updates:
-   - Use modular code structure for platform-specific scrapers
-   - Version scraper components properly
-   - Include both modern and legacy selectors where needed
-   - Test scrapers thoroughly before deployment
-9. Implement proper error handling and retry mechanisms:
-   - Use try/except blocks around scraping operations
-   - Implement proper exponential backoff for retries
-   - Log scraping errors appropriately
+8. Always follow best practices for web scraping:
+   - Use ethical scraping practices
+   - Respect robots.txt
+   - Implement proper rate limiting
+   - Test on small samples before running large scrapes
+9. Implement proper error handling and recovery:
+   - Use try/except blocks around network operations
+   - Implement retry mechanisms
    - Handle site structure changes gracefully
-10. Follow web scraping best practices:
-    - Respect robots.txt when applicable
-    - Implement user-agent rotation
-    - Use realistic browser fingerprinting
-    - Consider session management across requests
-    - Limit request rate to avoid IP bans
-11. Data Processing:
-    - Use consistent date formatting across platforms
-    - Implement proper data cleaning and normalization
-    - Handle missing or irregular data gracefully
-    - Maintain data integrity during export
+   - Log errors appropriately
+10. Follow Puppeteer best practices:
+    - Use appropriate selectors (prefer data attributes over CSS classes)
+    - Implement proper page lifecycle management
+    - Minimize resource usage
+    - Handle browser crashes and restarts
+11. API Development:
+    - Use FastAPI for any REST API endpoints
+    - Document all endpoints with OpenAPI/Swagger
+    - Implement proper validation using Pydantic models
+    - Use appropriate HTTP status codes
+    - Implement proper authentication and authorization
 12. Security considerations:
-    - Store API keys and proxies securely
-    - Implement secure storage for collected data
-    - Sanitize inputs to prevent injection
-    - Handle sensitive client information properly
+    - Store secrets securely (use environment variables or secure vaults)
+    - Implement input validation
+    - Use parameterized queries for any database interactions
+    - Implement proper authentication for API access
+    - Log security-relevant events
 
 ## Development Workflow
 
 1. Analysis phase:
-   - Understand the target platform's DOM structure
-   - Design scrapers to adapt to changing structures
-   - Document selector strategies for each platform
-   - Analyze anti-bot detection measures on target sites
+   - Understand the structure of review platforms
+   - Design scraping strategies
+   - Document selectors and extraction patterns
+   - Test for anti-bot detection mechanisms
 
 2. Implementation phase:
-   - Create scraper modules for each platform
-   - Implement anti-bot detection countermeasures
-   - Develop data processing and normalization
-   - Create multi-client handling system
+   - Create or update scraper modules
+   - Implement anti-bot evasion techniques
+   - Develop data extraction and normalization logic
+   - Create multi-client support systems
 
 3. Testing phase:
    - Unit tests for individual components
-   - Integration tests for full scraping workflow
-   - Performance testing with different anti-bot settings
-   - Resilience testing with various network conditions
+   - Integration tests for end-to-end scraping
+   - Performance testing
+   - Detection evasion testing
 
 4. Documentation phase:
    - Update technical documentation
    - Document command-line options
-   - Create usage guides for different scenarios
-   - Document troubleshooting techniques
+   - Create user guides
+   - Document anti-bot evasion techniques
 
 5. Deployment phase:
    - Setup instructions
-   - Configuration templates
-   - Monitoring systems for scraper health
-   - Maintenance procedures for handling site changes
+   - Configuration management
+   - Monitoring and maintenance
