@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updated": "2025-04-27T00:00:00Z",
+  "updated": "2025-04-27T20:10:00Z",
   "project": "restaurant_review_scraper",
   "topics": {
     "overview": {
@@ -10,12 +10,12 @@
     },
     "architecture": {
       "primary": ["core/architecture.md"],
-      "related": ["archival/implementation/system_design.md"],
+      "related": ["archival/implementation/scraper_design.md"],
       "keywords": ["design", "components", "system", "structure", "modules"]
     },
     "scraping": {
       "primary": ["archival/implementation/scraper_design.md"],
-      "related": ["archival/implementation/anti_bot_measures.md"],
+      "related": ["archival/implementation/anti_bot_measures.md", "archival/config/site_strategies.md"],
       "keywords": ["scraper", "crawler", "puppeteer", "extraction", "data"]
     },
     "status": {
@@ -35,7 +35,7 @@
     },
     "anti_bot": {
       "primary": ["archival/implementation/anti_bot_measures.md"],
-      "related": ["archival/implementation/browser_fingerprinting.md"],
+      "related": ["archival/implementation/browser_fingerprinting.md", "archival/implementation/proxy_management.md"],
       "keywords": ["anti-bot", "detection", "evasion", "fingerprinting", "human-like"]
     },
     "data_processing": {
@@ -45,8 +45,28 @@
     },
     "proxy_management": {
       "primary": ["archival/implementation/proxy_management.md"],
-      "related": ["archival/config/proxy_configuration.md"],
+      "related": ["archival/config/configuration_guide.md"],
       "keywords": ["proxy", "rotation", "management", "ip", "anonymity"]
+    },
+    "site_strategies": {
+      "primary": ["archival/config/site_strategies.md"],
+      "related": ["archival/implementation/scraper_design.md", "archival/implementation/data_processing.md"],
+      "keywords": ["strategies", "site-specific", "tripadvisor", "yelp", "google"]
+    },
+    "configuration": {
+      "primary": ["archival/config/configuration_guide.md"],
+      "related": ["archival/config/site_strategies.md"],
+      "keywords": ["configuration", "settings", "options", "yaml", "json"]
+    },
+    "testing": {
+      "primary": ["archival/implementation/testing_validation.md"],
+      "related": ["archival/implementation/scraper_design.md"],
+      "keywords": ["testing", "validation", "quality", "tests", "verification"]
+    },
+    "browser_fingerprinting": {
+      "primary": ["archival/implementation/browser_fingerprinting.md"],
+      "related": ["archival/implementation/anti_bot_measures.md"],
+      "keywords": ["browser", "fingerprinting", "stealth", "detection", "evasion"]
     }
   },
   "paths": {
@@ -93,9 +113,9 @@
       "keywords": ["anti-bot", "detection", "avoidance", "fingerprinting", "behavior"]
     },
     "archival/implementation/browser_fingerprinting.md": {
-      "title": "Browser Fingerprinting Randomization",
+      "title": "Browser Fingerprinting Techniques",
       "category": "implementation",
-      "priority": "medium",
+      "priority": "high",
       "keywords": ["fingerprinting", "browser", "randomization", "detection", "masking"]
     },
     "archival/implementation/human_behavior_simulation.md": {
@@ -122,11 +142,41 @@
       "priority": "high",
       "keywords": ["proxy", "rotation", "management", "ip", "anonymity"]
     },
-    "archival/config/proxy_configuration.md": {
-      "title": "Proxy Configuration Options",
+    "archival/implementation/testing_validation.md": {
+      "title": "Testing and Validation Procedures",
+      "category": "implementation",
+      "priority": "medium",
+      "keywords": ["testing", "validation", "quality", "verification", "tests"]
+    },
+    "archival/config/site_strategies.md": {
+      "title": "Site-Specific Scraping Strategies",
       "category": "config",
       "priority": "medium",
-      "keywords": ["proxy", "configuration", "settings", "options", "parameters"]
+      "keywords": ["strategies", "scraping", "site-specific", "tripadvisor", "yelp", "google"]
+    },
+    "archival/config/configuration_guide.md": {
+      "title": "Configuration Guide",
+      "category": "config",
+      "priority": "high",
+      "keywords": ["configuration", "settings", "yaml", "json", "options"]
+    },
+    "archival/api/README.md": {
+      "title": "API Documentation Directory",
+      "category": "api",
+      "priority": "medium",
+      "keywords": ["api", "endpoints", "documentation", "integration"]
+    },
+    "archival/config/README.md": {
+      "title": "Configuration Documentation Directory",
+      "category": "config",
+      "priority": "medium",
+      "keywords": ["configuration", "documentation", "settings", "options"]
+    },
+    "claude_memory/MIGRATION_TRACKING.md": {
+      "title": "Documentation Migration Tracking",
+      "category": "system",
+      "priority": "high",
+      "keywords": ["migration", "tracking", "documentation", "conversion"]
     }
   },
   "components": {
@@ -140,8 +190,8 @@
       "archival/implementation/human_behavior_simulation.md"
     ],
     "data_extraction": [
-      "archival/implementation/data_extraction.md",
-      "archival/implementation/selector_strategies.md"
+      "archival/implementation/data_processing.md",
+      "archival/config/site_strategies.md"
     ],
     "data_processing": [
       "archival/implementation/data_processing.md",
@@ -149,15 +199,31 @@
     ],
     "proxy_management": [
       "archival/implementation/proxy_management.md",
-      "archival/config/proxy_configuration.md"
+      "archival/config/configuration_guide.md"
+    ],
+    "configuration": [
+      "archival/config/configuration_guide.md",
+      "archival/config/site_strategies.md"
+    ],
+    "testing": [
+      "archival/implementation/testing_validation.md"
+    ],
+    "site_specific": [
+      "archival/config/site_strategies.md",
+      "archival/implementation/data_processing.md"
     ]
   },
   "queries": {
     "scraper_implementation": ["archival/implementation/scraper_design.md", "archival/implementation/puppeteer_automation.md"],
     "anti_bot_techniques": ["archival/implementation/anti_bot_measures.md", "archival/implementation/browser_fingerprinting.md", "archival/implementation/human_behavior_simulation.md"],
     "project_status": ["core/current_status.md", "recall/session_most_recent.md"],
-    "system_design": ["core/architecture.md", "archival/implementation/system_design.md"],
+    "system_design": ["core/architecture.md", "archival/implementation/scraper_design.md"],
     "data_handling": ["archival/implementation/data_processing.md", "archival/implementation/data_export.md"],
-    "proxies": ["archival/implementation/proxy_management.md", "archival/config/proxy_configuration.md"]
+    "proxies": ["archival/implementation/proxy_management.md", "archival/config/configuration_guide.md"],
+    "site_specific_scraping": ["archival/config/site_strategies.md", "archival/implementation/data_processing.md"],
+    "configuration_options": ["archival/config/configuration_guide.md", "archival/config/site_strategies.md"],
+    "testing_procedures": ["archival/implementation/testing_validation.md", "archival/implementation/scraper_design.md"],
+    "browser_fingerprinting": ["archival/implementation/browser_fingerprinting.md", "archival/implementation/anti_bot_measures.md"],
+    "documentation_migration": ["claude_memory/MIGRATION_TRACKING.md"]
   }
 }
