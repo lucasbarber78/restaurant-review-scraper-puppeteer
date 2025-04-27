@@ -4,6 +4,11 @@ category: "core"
 date_created: "2025-04-27"
 last_updated: "2025-04-27"
 priority: "high"
+related_documents:
+  - "claude_memory/restaurant_review_scraper/core/project_overview.md"
+  - "claude_memory/restaurant_review_scraper/core/architecture.md"
+  - "claude_memory/restaurant_review_scraper/core/current_status.md"
+  - "claude_memory/restaurant_review_scraper/archival/implementation/anti_bot_measures.md"
 ---
 
 # Project Requirements
@@ -130,6 +135,77 @@ This document outlines the functional and non-functional requirements for the Re
    - Should support command-line interface
    - Could provide hooks for event-based integration
 
+## Best Practices Requirements
+
+### Web Scraping Best Practices
+
+1. **Ethical Scraping**
+   - Must respect robots.txt files when configured to do so
+   - Must implement appropriate rate limiting to avoid server overload
+   - Should avoid scraping data marked as private or non-public
+   - Should respect the terms of service of target sites where applicable
+
+2. **Performance Optimization**
+   - Must implement appropriate delays between requests
+   - Should use stealth plugins to avoid detection
+   - Should consider rotating user agents and proxies
+   - Must optimize resource usage during scraping operations
+
+3. **Data Integrity**
+   - Must maintain backward compatibility with existing data structures
+   - Must document all scraper interactions and data extraction patterns
+   - Should implement data validation and error checking
+   - Should handle edge cases and unexpected data formats
+
+### Error Handling Requirements
+
+1. **Robust Error Management**
+   - Must use try/except blocks around network operations
+   - Must implement retry mechanisms for transient failures
+   - Must handle site structure changes gracefully
+   - Must implement appropriate error logging
+   - Should provide detailed debug information for troubleshooting
+
+2. **Recovery Mechanisms**
+   - Must support graceful recovery from failures
+   - Should maintain partial results in case of interruptions
+   - Should implement session persistence for long-running operations
+   - Must handle browser crashes and restarts seamlessly
+
+### Puppeteer-Specific Requirements
+
+1. **Browser Management**
+   - Must use appropriate selectors (prefer data attributes over CSS classes)
+   - Must implement proper page lifecycle management
+   - Must minimize resource usage during operation
+   - Must handle browser crashes and restarts
+   - Should implement efficient memory management
+
+2. **Anti-Detection Requirements**
+   - Must implement stealth plugins to avoid detection
+   - Must simulate human-like behavior
+   - Must implement random delays between actions
+   - Should randomize scrolling and navigation patterns
+   - Should implement browser fingerprinting countermeasures
+
+### API Development Requirements
+
+If API endpoints are implemented:
+
+1. **API Design**
+   - Must use FastAPI for any REST API endpoints
+   - Must document all endpoints with OpenAPI/Swagger
+   - Must implement proper validation using Pydantic models
+   - Must use appropriate HTTP status codes
+   - Must implement proper authentication and authorization
+
+2. **Security Considerations**
+   - Must store secrets securely (use environment variables or secure vaults)
+   - Must implement input validation
+   - Must use parameterized queries for any database interactions
+   - Must implement proper authentication for API access
+   - Must log security-relevant events
+
 ## Success Criteria
 
 The project will be considered successful if it:
@@ -146,3 +222,4 @@ The project will be considered successful if it:
 - [Project Overview](project_overview.md)
 - [System Architecture](architecture.md)
 - [Current Status](current_status.md)
+- [Anti-Bot Measures](../archival/implementation/anti_bot_measures.md)
