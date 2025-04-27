@@ -1,6 +1,25 @@
-# Restaurant Review Scraper - Puppeteer Edition
+# Restaurant Review Scraper with Puppeteer
 
-A comprehensive solution for scraping reviews from TripAdvisor, Yelp, and Google Reviews using Puppeteer with advanced anti-bot detection features.
+An enhanced web scraping solution specifically designed for restaurant review sites with anti-bot detection mechanisms using Puppeteer.
+
+## Claude-Iterated Memory System
+
+This project uses a Claude-iterated memory system for documentation and project management. This approach:
+
+1. **Organizes knowledge in three tiers:**
+   - Core Memory: Essential project information
+   - Recall Memory: Conversation history and decisions
+   - Archival Memory: Detailed technical documentation
+
+2. **Provides structured access to project information**
+   - Use the memory index to navigate between related documents
+   - Ask Claude about specific components or features
+
+3. **Evolves documentation naturally through conversations**
+   - Documentation updates happen as part of development
+   - Maintains consistency across documentation tiers
+
+To learn more about how to use this system, see [CLAUDE_MEMORY_GUIDE.md](CLAUDE_MEMORY_GUIDE.md).
 
 ## What's New - Multi-Client Support
 
@@ -47,7 +66,7 @@ This project aims to solve the following challenges for restaurant owners and ma
 - Automated categorization of reviews based on content
 - Anti-bot detection techniques for reliable scraping
 - Configurable scraping parameters
-- **NEW**: Multi-client management and batch processing
+- Multi-client management and batch processing
 
 ## Enhanced Anti-Bot Detection System
 
@@ -126,7 +145,7 @@ csv_file_path: "reviews.csv"
 
 ### Multiple Client Configuration
 
-The new `clients.json` file allows you to manage multiple restaurants:
+The `clients.json` file allows you to manage multiple restaurants:
 
 ```json
 {
@@ -147,20 +166,33 @@ The new `clients.json` file allows you to manage multiple restaurants:
 
 Each client can have its own configuration settings that override the defaults from `config.yaml`.
 
-## Structure Analysis Configuration
+## Documentation Structure
 
-The new structure analysis system helps maintain compatibility with Google's changing DOM structure:
+The project documentation is organized using the Claude-iterated memory system:
 
-```yaml
-# Structure analysis settings
-structure_analysis_path: "data/structure_analysis.json"
-update_structure_on_start: false  # Whether to update structure analysis when starting scraper
-structure_analysis_settings:
-  min_samples: 5  # Minimum number of samples to collect for structure analysis
-  max_samples: 10  # Maximum number of samples to collect for structure analysis
-  save_samples: true  # Whether to save HTML samples during structure analysis
-  samples_directory: "data/samples"  # Directory to save HTML samples
-```
+### Core Memory (`claude_memory/restaurant_review_scraper/core/`)
+
+Contains essential project information:
+- `project_overview.md`: High-level description of the project
+- `architecture.md`: System architecture and component relationships
+- `requirements.md`: Functional and non-functional requirements
+- `current_status.md`: Current project status and roadmap
+- `ai_workflow.md`: Guidelines for Claude-assisted development
+
+### Recall Memory (`claude_memory/restaurant_review_scraper/recall/`)
+
+Contains session summaries and decision history:
+- Session summaries organized by date
+- Records of key decisions and rationales
+- Tracking of project evolution over time
+
+### Archival Memory (`claude_memory/restaurant_review_scraper/archival/`)
+
+Contains detailed technical documentation:
+- Implementation details for specific components
+- Configuration guidance
+- API documentation
+- Detailed technical specifications
 
 ## Usage
 
@@ -241,102 +273,6 @@ python src/main.py --enhanced --no-random-delays
 python src/main.py --enhanced --enable-proxy-rotation
 ```
 
-### Other Command Line Options
-
-```bash
-# Set maximum number of reviews per platform
-python src/main.py --max-reviews 50
-
-# Use a custom configuration file
-python src/main.py --config my_custom_config.yaml
-
-# Show debug information
-python src/main.py --debug
-```
-
-### Combining Options
-
-You can combine options for more specific control:
-
-```bash
-# Process a specific client with enhanced protection, only scraping Yelp
-python src/main.py --client bowens_island --enhanced --platform yelp
-
-# Process all active clients and update structure analysis first
-python src/main.py --all-clients --update-structure
-```
-
-## Directory Structure
-
-The recommended directory structure for organizing client data:
-
-```
-restaurant-review-scraper-puppeteer/
-├── config.yaml
-├── clients.json
-├── src/
-│   ├── main.py
-│   ├── update_structure.py
-│   ├── tripadvisor_scraper.py
-│   ├── yelp_scraper.py
-│   ├── google_scraper.py
-│   └── utils/
-├── data/
-│   ├── structure_analysis.json
-│   ├── samples/
-│   └── clients/
-│       ├── client1/
-│       │   └── reviews.csv
-│       ├── client2/
-│       │   └── reviews.csv
-│       └── client3/
-│           └── reviews.csv
-└── screenshots/
-```
-
-## Understanding the Results
-
-Each client's scraper generates a CSV file with detailed review data:
-
-1. **Platform**: Source of the review (TripAdvisor, Yelp, or Google)
-2. **Restaurant Name**: Name of the restaurant
-3. **Reviewer Name**: Name of the reviewer
-4. **Rating**: Star rating (1-5)
-5. **Date**: Original date format from the platform
-6. **Standardized Date**: Normalized date format (YYYY-MM-DD)
-7. **Text**: Full review text
-8. **Category**: Automatically classified category
-9. **Sentiment**: Positive, Neutral, or Negative
-
-## Practical Use Cases
-
-### Agency Management
-
-If you're an agency managing multiple restaurant clients, the multi-client support allows you to:
-
-1. Set up configurations for all your clients in one place
-2. Run batch processing to collect reviews for all clients overnight
-3. Keep each client's data in separate organized directories
-4. Apply different scraping settings per client based on their needs
-
-### In-Depth Analysis
-
-For restaurant owners who want a complete analysis of their online reputation:
-
-1. Run the scraper with all platforms enabled
-2. Generate statistics and identify problem areas
-3. Track improvement over time by scraping weekly or monthly
-4. Compare results across platforms to identify platform-specific issues
-
-### Competitive Analysis
-
-For competitive intelligence:
-
-1. Add your competitors to your `clients.json` file
-2. Run the scraper with the `--all-clients` option
-3. Compare your reviews with competitors' reviews
-4. Identify strengths and weaknesses relative to competition
-
 ## Troubleshooting
 
 ### Error: "Failed to create browser session"
@@ -348,7 +284,7 @@ For competitive intelligence:
 ### Error: "Bot detection encountered"
 
 - Try running with enhanced anti-bot features: `--enhanced`
-- Disable headless mode: remove `--headless` flag or set `--headless false`
+- Disable headless mode: set `--headless false`
 - Try reducing the number of reviews you're scraping at once
 
 ### Error: "No reviews found"
@@ -357,12 +293,6 @@ For competitive intelligence:
 - Check if the restaurant has any reviews on that platform
 - Try running with just one platform to isolate the issue
 - Run with `--update-structure` to adapt to DOM changes
-
-### Warning: "Date parsing failed"
-
-- This usually means the date format wasn't recognized
-- The review will still be included but might not be filtered correctly by date
-- Consider updating the date parsing patterns in `date_utils.py`
 
 ## Contributing
 
