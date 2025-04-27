@@ -1,0 +1,163 @@
+{
+  "version": "1.0",
+  "updated": "2025-04-27T00:00:00Z",
+  "project": "restaurant_review_scraper",
+  "topics": {
+    "overview": {
+      "primary": ["core/project_overview.md"],
+      "related": ["core/architecture.md", "core/requirements.md"],
+      "keywords": ["project", "introduction", "features", "purpose", "goals"]
+    },
+    "architecture": {
+      "primary": ["core/architecture.md"],
+      "related": ["archival/implementation/system_design.md"],
+      "keywords": ["design", "components", "system", "structure", "modules"]
+    },
+    "scraping": {
+      "primary": ["archival/implementation/scraper_design.md"],
+      "related": ["archival/implementation/anti_bot_measures.md"],
+      "keywords": ["scraper", "crawler", "puppeteer", "extraction", "data"]
+    },
+    "status": {
+      "primary": ["core/current_status.md"],
+      "related": ["recall/session_most_recent.md"],
+      "keywords": ["progress", "current", "development", "completed", "pending"]
+    },
+    "requirements": {
+      "primary": ["core/requirements.md"],
+      "related": ["core/project_overview.md"],
+      "keywords": ["functional", "non-functional", "constraints", "specifications"]
+    },
+    "workflow": {
+      "primary": ["core/ai_workflow.md"],
+      "related": ["archival/implementation/development_workflow.md"],
+      "keywords": ["workflow", "process", "development", "collaboration"]
+    },
+    "anti_bot": {
+      "primary": ["archival/implementation/anti_bot_measures.md"],
+      "related": ["archival/implementation/browser_fingerprinting.md"],
+      "keywords": ["anti-bot", "detection", "evasion", "fingerprinting", "human-like"]
+    },
+    "data_processing": {
+      "primary": ["archival/implementation/data_processing.md"],
+      "related": ["archival/implementation/data_export.md"],
+      "keywords": ["processing", "cleaning", "structuring", "transformation"]
+    },
+    "proxy_management": {
+      "primary": ["archival/implementation/proxy_management.md"],
+      "related": ["archival/config/proxy_configuration.md"],
+      "keywords": ["proxy", "rotation", "management", "ip", "anonymity"]
+    }
+  },
+  "paths": {
+    "core/project_overview.md": {
+      "title": "Project Overview",
+      "category": "core",
+      "priority": "high",
+      "keywords": ["overview", "purpose", "goals", "features", "components"]
+    },
+    "core/architecture.md": {
+      "title": "System Architecture",
+      "category": "core",
+      "priority": "high",
+      "keywords": ["architecture", "components", "data flow", "design"]
+    },
+    "core/current_status.md": {
+      "title": "Current Project Status",
+      "category": "core",
+      "priority": "high",
+      "keywords": ["status", "progress", "completed", "pending", "focus"]
+    },
+    "core/requirements.md": {
+      "title": "Project Requirements",
+      "category": "core",
+      "priority": "high",
+      "keywords": ["requirements", "functional", "non-functional", "constraints"]
+    },
+    "core/ai_workflow.md": {
+      "title": "AI Workflow Guidelines",
+      "category": "core",
+      "priority": "high",
+      "keywords": ["workflow", "guidelines", "claude", "conversation", "collaboration"]
+    },
+    "archival/implementation/scraper_design.md": {
+      "title": "Scraper Design and Architecture",
+      "category": "implementation",
+      "priority": "high",
+      "keywords": ["scraper", "design", "architecture", "components", "workflow"]
+    },
+    "archival/implementation/anti_bot_measures.md": {
+      "title": "Anti-Bot Detection Measures",
+      "category": "implementation",
+      "priority": "high",
+      "keywords": ["anti-bot", "detection", "avoidance", "fingerprinting", "behavior"]
+    },
+    "archival/implementation/browser_fingerprinting.md": {
+      "title": "Browser Fingerprinting Randomization",
+      "category": "implementation",
+      "priority": "medium",
+      "keywords": ["fingerprinting", "browser", "randomization", "detection", "masking"]
+    },
+    "archival/implementation/human_behavior_simulation.md": {
+      "title": "Human Behavior Simulation",
+      "category": "implementation",
+      "priority": "medium",
+      "keywords": ["human-like", "behavior", "simulation", "navigation", "timing"]
+    },
+    "archival/implementation/data_processing.md": {
+      "title": "Data Extraction and Processing",
+      "category": "implementation",
+      "priority": "high",
+      "keywords": ["data", "extraction", "processing", "cleaning", "transformation"]
+    },
+    "archival/implementation/data_export.md": {
+      "title": "Data Export Formats and Methods",
+      "category": "implementation",
+      "priority": "medium",
+      "keywords": ["export", "format", "json", "csv", "database"]
+    },
+    "archival/implementation/proxy_management.md": {
+      "title": "Proxy Management System",
+      "category": "implementation",
+      "priority": "high",
+      "keywords": ["proxy", "rotation", "management", "ip", "anonymity"]
+    },
+    "archival/config/proxy_configuration.md": {
+      "title": "Proxy Configuration Options",
+      "category": "config",
+      "priority": "medium",
+      "keywords": ["proxy", "configuration", "settings", "options", "parameters"]
+    }
+  },
+  "components": {
+    "scraper_engine": [
+      "archival/implementation/scraper_design.md",
+      "archival/implementation/puppeteer_automation.md"
+    ],
+    "anti_bot": [
+      "archival/implementation/anti_bot_measures.md",
+      "archival/implementation/browser_fingerprinting.md",
+      "archival/implementation/human_behavior_simulation.md"
+    ],
+    "data_extraction": [
+      "archival/implementation/data_extraction.md",
+      "archival/implementation/selector_strategies.md"
+    ],
+    "data_processing": [
+      "archival/implementation/data_processing.md",
+      "archival/implementation/data_export.md"
+    ],
+    "proxy_management": [
+      "archival/implementation/proxy_management.md",
+      "archival/config/proxy_configuration.md"
+    ]
+  },
+  "queries": {
+    "scraper_implementation": ["archival/implementation/scraper_design.md", "archival/implementation/puppeteer_automation.md"],
+    "anti_bot_techniques": ["archival/implementation/anti_bot_measures.md", "archival/implementation/browser_fingerprinting.md", "archival/implementation/human_behavior_simulation.md"],
+    "project_status": ["core/current_status.md", "recall/session_most_recent.md"],
+    "system_design": ["core/architecture.md", "archival/implementation/system_design.md"],
+    "data_handling": ["archival/implementation/data_processing.md", "archival/implementation/data_export.md"],
+    "proxies": ["archival/implementation/proxy_management.md", "archival/config/proxy_configuration.md"]
+  }
+}
