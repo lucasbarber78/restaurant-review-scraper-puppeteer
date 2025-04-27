@@ -1,112 +1,55 @@
----
-title: "Configuration Documentation"
-category: "archival/config"
-date_created: "2025-04-27"
-last_updated: "2025-04-27"
-priority: "medium"
-components: ["configuration", "documentation"]
-keywords: ["config", "settings", "parameters", "documentation"]
----
-
 # Configuration Documentation
 
-This directory contains documentation related to the configuration aspects of the restaurant review scraper system. It focuses on how to configure, customize, and adapt the scraper for different use cases, sites, and environments.
+This directory contains archival memory documentation related to configuration options, settings, and customization for the restaurant review scraper.
 
 ## Purpose
 
-The configuration documentation serves to:
+The configuration documentation provides detailed information on:
 
-1. Explain the available configuration options and their effects
-2. Provide templates for site-specific scraping strategies
-3. Document installation and setup procedures
-4. Outline environment requirements and dependencies
-5. Define schemas for configuration files
+1. **Configuration Options**: All available configuration settings and their purposes
+2. **Configuration File Format**: Structure and format of configuration files
+3. **Environment Variables**: Environment variables that control scraper behavior
+4. **Command-Line Arguments**: Available command-line options
+5. **Site-Specific Settings**: Configuration specific to different review platforms
+6. **Multi-Client Configuration**: Managing configuration for multiple restaurant clients
 
-## Directory Structure
+## Document Types
 
-```
-config/
-├── README.md                     # This file
-├── site_strategy_template.md     # Template for creating site-specific strategies
-├── tripadvisor_strategy.md       # TripAdvisor-specific implementation details
-├── yelp_strategy.md              # Yelp-specific implementation details
-├── google_strategy.md            # Google Reviews-specific implementation details
-├── installation.md               # Installation and environment setup guide
-├── configuration_schema.md       # Documentation of config.yaml format
-├── clients_schema.md             # Documentation of clients.json format
-└── environment_variables.md      # Documentation of environment variables
-```
+The following document types should be stored in this directory:
 
-## How to Use This Section
+- **Configuration Guides**: Comprehensive guides to all configuration options
+- **Site-Specific Strategy Docs**: Configuration specific to each review platform
+- **Configuration Examples**: Example configurations for different use cases
+- **Parameter References**: Detailed descriptions of each configuration parameter
+- **Environment Variable References**: Documentation for environment variables
+- **CLI References**: Documentation for command-line interface options
 
-### For Developers
+## File Naming Conventions
 
-If you are a developer working on the scraper:
+Files in this directory should follow these naming conventions:
 
-1. Read the [installation guide](installation.md) to set up your development environment
-2. Study the site-specific strategies to understand the implementation details
-3. Use the templates when adding support for new review sites
-4. Refer to the schema documentation when modifying configuration formats
+- `configuration_guide.md`: Comprehensive configuration documentation
+- `site_strategies.md`: Site-specific scraping strategies documentation
+- `environment_variables.md`: Environment variable documentation
+- `command_line_interface.md`: CLI documentation
+- `config_[use_case].md`: Configuration for a specific use case
+- `installation.md`: Installation and setup documentation
 
-### For System Administrators
+## Relationship to Other Documentation
 
-If you are setting up or maintaining the scraper:
+Configuration documentation should reference:
 
-1. Follow the [installation guide](installation.md) to install the application
-2. Use the [configuration schema](configuration_schema.md) to understand available options
-3. Set up environment variables as documented in [environment_variables.md](environment_variables.md)
+- Core requirements for context on why settings exist
+- Implementation details for how settings affect behavior
+- Architecture documents for system context
 
-### For End Users
+## Example Documents
 
-If you are using the scraper as an end user:
+This directory includes documents such as:
 
-1. Read the [configuration schema](configuration_schema.md) to understand how to customize the scraper
-2. Learn how to set up multiple clients in [clients_schema.md](clients_schema.md)
-3. Check the site-specific documentation if you encounter issues with particular review sites
-
-## Key Topics
-
-### Site-Specific Strategies
-
-Each review site has its own structure, selectors, and challenges. The site-specific strategy documents explain:
-
-- DOM structure and key selectors
-- Navigation patterns
-- Date format parsing
-- Anti-bot detection techniques
-- Known issues and workarounds
-- Version history of the strategy
-
-### Configuration Files
-
-The scraper uses several configuration files:
-
-1. **config.yaml**: Main configuration file with global settings
-2. **clients.json**: Configuration for multiple restaurant clients
-3. **structure_analysis.json**: Automatically updated site structure information
-
-The schema documentation explains all available options, their defaults, and effects.
-
-### Environment Setup
-
-The installation and environment documentation covers:
-
-- System requirements
-- Dependency installation
-- Browser setup
-- Proxy configuration
-- Development vs. production environments
-
-## Additions and Updates
-
-When adding a new site-specific strategy or updating configuration options:
-
-1. Use the provided templates to ensure consistent documentation
-2. Update any affected schema documentation
-3. Note version changes in version history sections
-4. Update this README if adding new document types
-
-## Related Sections
-
-- [Implementation Documentation](../implementation/README.md): Technical implementation details
-- [API Documentation](../api/README.md): API interfaces and usage
+- `configuration_guide.md`: Comprehensive guide to all configuration options
+- `site_strategies.md`: Documentation for site-specific scraping strategies
+- `command_line_interface.md`: Documentation for command-line options
+- `config_high_volume.md`: Configuration example for high-volume scraping
+- `config_stealth.md`: Configuration example for stealth-focused scraping
+- `installation.md`: Setup and installation instructions
