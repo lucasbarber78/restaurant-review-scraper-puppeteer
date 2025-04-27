@@ -4,6 +4,10 @@ category: "core"
 date_created: "2025-04-27"
 last_updated: "2025-04-27"
 priority: "high"
+related_documents:
+  - "claude_memory/restaurant_review_scraper/core/project_overview.md"
+  - "claude_memory/restaurant_review_scraper/core/current_status.md"
+  - "claude_memory/CLAUDE_MEMORY_GUIDE.md"
 ---
 
 # AI Workflow Guidelines
@@ -11,6 +15,78 @@ priority: "high"
 ## Overview
 
 This document outlines the workflow for using Claude and the Claude-iterated memory system in the Restaurant Review Scraper project. It provides guidelines for effective collaboration, documentation maintenance, and development processes utilizing Claude's capabilities.
+
+## The .claude.json Configuration
+
+The `.claude.json` file provides structured instructions for the AI assistant to ensure consistent project management across multiple conversations. It helps maintain a standardized approach to:
+
+- Starting conversations
+- Ending conversations
+- Following approval rules
+- Managing documentation updates
+- Adhering to project-specific technical guidelines
+- Following the established development workflow
+
+### Structure of .claude.json
+
+The `.claude.json` file uses the following structure:
+
+```json
+{
+  "projectInstructions": {
+    "conversationStart": {
+      "requiredFiles": [...],
+      "actions": [...]
+    },
+    "conversationEnd": {
+      "requiredQuestions": [...]
+    },
+    "approvalRules": {
+      "requireExplicitApproval": [...],
+      "approvalFormat": "..."
+    },
+    "projectEditing": {
+      "toolUsage": {
+        "allowedTools": [...],
+        "prohibitedTools": [...],
+        "editingWorkflow": "..."
+      }
+    },
+    "documentationGuidelines": {
+      "nextStepsMd": {
+        "preserveSections": [...],
+        "updateFormat": {...}
+      },
+      "completedEnhancement": {
+        "askAbout": [...]
+      }
+    },
+    "projectSpecific": {
+      "securityConsiderations": [...],
+      "scrapingBestPractices": [...],
+      "apiDevelopment": [...],
+      "errorHandling": [...]
+    },
+    "developmentWorkflow": {
+      "phases": [
+        {
+          "name": "...",
+          "tasks": [...]
+        },
+        ...
+      ]
+    }
+  }
+}
+```
+
+### Updating the .claude.json File
+
+If you need to update the workflow instructions:
+
+1. Edit the `.claude.json` file directly
+2. Follow the established JSON structure
+3. Commit the changes to the repository
 
 ## Collaboration Workflow
 
@@ -75,6 +151,25 @@ When concluding a development session:
    - Identify open questions or issues to address in future sessions
    - Set priorities for the next development session
 
+## Approval Requirements
+
+Claude will always request explicit approval before:
+- Making any code changes
+- Updating NEXT_STEPS.md
+- Updating FUTURE_ENHANCEMENTS.md
+- Making any documentation updates
+- Implementing any solution
+
+The approval process requires an explicit "Yes" from you before proceeding with any changes.
+
+### Project Editing Guidelines
+
+Claude will:
+1. Only use GitHub Model Context Protocol tools for making changes to the project
+2. Never use the fileserver model context protocol tools unless specifically requested
+3. Make all edits directly in the GitHub repository, never to local files
+4. This workflow allows you to sync changes from GitHub to your local machine when ready
+
 ## Documentation Maintenance
 
 ### When to Update Documentation
@@ -121,6 +216,17 @@ When updating documentation:
 4. **Validate documentation**
    - Check for consistency across documents
    - Ensure all metadata is accurate and up-to-date
+
+### NEXT_STEPS.md Updates
+
+When updating NEXT_STEPS.md (with approval):
+- The "What We've Accomplished" section will be preserved
+- Newly completed items will be added to "Recently Completed" with the current date
+- The "Current Enhancement" section will be updated with remaining tasks
+
+If a current enhancement is completed, Claude will ask if you want to:
+- Select a new enhancement from FUTURE_ENHANCEMENTS.md
+- Update NEXT_STEPS.md with detailed implementation steps for the newly selected enhancement
 
 ## Memory Tiers Usage Guidelines
 
@@ -187,6 +293,39 @@ priority: "medium"
 - Specify the appropriate location for each artifact
 ```
 
+## Project-Specific Development Workflow
+
+The project follows these development phases as outlined in .claude.json:
+
+1. **Analysis Phase**
+   - Understanding website structure
+   - Designing scraping strategies
+   - Documenting selectors and extraction patterns
+   - Testing for anti-bot detection mechanisms
+
+2. **Implementation Phase**
+   - Creating/updating scraper modules
+   - Implementing anti-bot evasion techniques
+   - Developing data extraction and normalization logic
+   - Creating multi-client support systems
+
+3. **Testing Phase**
+   - Unit testing components
+   - Integration testing for end-to-end scraping
+   - Performance testing
+   - Detection evasion testing
+
+4. **Documentation Phase**
+   - Updating technical documentation
+   - Documenting command-line options
+   - Creating user guides
+   - Documenting anti-bot evasion techniques
+
+5. **Deployment Phase**
+   - Creating setup instructions
+   - Managing configuration
+   - Setting up monitoring and maintenance
+
 ## Specialized Workflows for the Scraper Project
 
 ### Selector Development Workflow
@@ -226,6 +365,39 @@ When developing anti-detection features:
    - Monitor detection effectiveness
    - Update countermeasures as detection methods evolve
    - Maintain documentation of the arms race
+
+## Project-Specific Technical Guidelines
+
+The .claude.json file includes detailed guidelines for:
+
+### Security Considerations
+- Ethical scraping practices
+- Secure storage of secrets
+- Input validation
+- Proper rate limiting
+- Security event logging
+
+### Scraping Best Practices
+- Anti-bot detection techniques
+- Selector strategies
+- Error handling
+- Browser management
+- Proxy rotation implementation
+- Puppeteer optimization
+- Resource usage monitoring
+
+### API Development
+- FastAPI for REST endpoints
+- OpenAPI/Swagger documentation
+- Pydantic model validation
+- HTTP status code usage
+- Authentication and authorization
+
+### Error Handling
+- Try/except blocks for network operations
+- Retry mechanisms
+- Graceful handling of site structure changes
+- Error logging
 
 ## Related Documents
 
